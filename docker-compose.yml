@@ -1,0 +1,110 @@
+volumes:
+  table-top-stories:
+    external: true
+services:
+  react:
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
+    volumes:
+      - ./ghi/app:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+  database:
+    image: postgres:14.2-bullseye
+    volumes:
+      - table-top-stories:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=account,campaign,note,npc,player_character,world
+      - POSTGRES_PASSWORD=databases
+    ports:
+      - 15432:5432
+  world:
+    build:
+      context: ./world
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8060:8000"
+    volumes:
+      - ./world:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://world:password@database:5432/world
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+  # account:
+  #   build:
+  #     context: ./account
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8100:8000"
+  #   volumes:
+  #     - ./account:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://account:password@database:5432/account
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
+  # campaign:
+  #   build:
+  #     context: ./campaign
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8090:8000"
+  #   volumes:
+  #     - ./campaign:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://campaign:password@database:5432/campaign
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
+  # note:
+  #   build:
+  #     context: ./note
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8080:8000"
+  #   volumes:
+  #     - ./note:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://note:password@database:5432/note
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
+  # npc:
+  #   build:
+  #     context: ./npc
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8070:8000"
+  #   volumes:
+  #     - ./npc:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://npc:password@database:5432/npc
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
+  # player_character:
+  #   build:
+  #     context: ./player_character
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8060:8000"
+  #   volumes:
+  #     - ./player_character:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://player_character:password@database:5432/player_character
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
