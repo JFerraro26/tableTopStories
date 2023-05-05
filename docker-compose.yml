@@ -52,20 +52,6 @@ services:
   #     DATABASE_URL: postgres://account:password@database:5432/account
   #     WAIT_HOSTS: database:5432
   #     WAIT_TIMEOUT: 240
-  # campaign:
-  #   build:
-  #     context: ./campaign
-  #     dockerfile: ./Dockerfile.dev
-  #   ports:
-  #     - "8090:8000"
-  #   volumes:
-  #     - ./campaign:/app
-  #   depends_on:
-  #     - database
-  #   environment:
-  #     DATABASE_URL: postgres://campaign:password@database:5432/campaign
-  #     WAIT_HOSTS: database:5432
-  #     WAIT_TIMEOUT: 240
   # note:
   #   build:
   #     context: ./note
