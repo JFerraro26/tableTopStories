@@ -1,4 +1,4 @@
-from .models import World, City, Country, Campaign, NpcVO
+from .models import World, City, Country, NpcVO
 from rest_framework import serializers
 from rest_framework import generics
 
@@ -6,95 +6,103 @@ from rest_framework import generics
 
 
 # Create your views here.
-class CampaignSerializer(serializers.ModelSerializer):
+class NpcVOListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Campaign
+        model = NpcVO
         fields = [
-            "id",
+            "pk",
             "name",
-            "system",
-            "picture",
-            "description",
         ]
 
-class WorldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = World
-        fields = [
-            "id",
-            "name",
-            "picture",
-            "description",
-        ]
-
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = [
-            "id",
-            "name",
-            "picture",
-            "description",
-            "world",
-        ]
-
-class CitySerializer(serializers.ModelSerializer):
+class CityListSerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = [
-            "id",
+            "pk",
+            "name",
+            "country",
+        ]
+
+class CityDetailSerializer(serializers.ModelSerializer):
+    npcs = NpcVOListSerializer(many=True, read_only=True)
+    class Meta:
+        model = City
+        fields = [
+            "pk",
             "name",
             "picture",
             "description",
             "country",
+            "npcs",
         ]
 
-class NpcVOSerializer(serializers.ModelSerializer):
+class CountryListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = NpcVO
+        model = Country
         fields = [
-            "id",
+            "pk",
+            "name",
+            "world",
+        ]
+
+class CountryDetailSerializer(serializers.ModelSerializer):
+    cities = CityDetailSerializer(many=True, read_only=True)
+    class Meta:
+        model = Country
+        fields = [
+            "pk",
             "name",
             "picture",
-            "chr_class",
             "description",
-            "current_city",
-            "visited_cities",
+            "world",
+            "cities",
         ]
 
+class WorldListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = World
+        fields = [
+            "pk",
+            "name",
+        ]
 
-class CampaignList(generics.ListCreateAPIView):
-    queryset = Campaign.objects.all()
-    serializer_class = CampaignSerializer
-
-class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Campaign.objects.all()
-    serializer_class = CampaignSerializer
+class WorldDetailSerializer(serializers.ModelSerializer):
+    countries = CountryDetailSerializer(many=True, read_only=True)
+    class Meta:
+        model = World
+        fields = [
+            "pk",
+            "name",
+            "picture",
+            "description",
+            "countries",
+        ]
+        depth = 1
 
 class WorldList(generics.ListCreateAPIView):
     queryset = World.objects.all()
-    serializer_class = WorldSerializer
+    serializer_class = WorldListSerializer
 
 class WorldDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = World.objects.all()
-    serializer_class = WorldSerializer
+    serializer_class = WorldDetailSerializer
 
 class CountryList(generics.ListCreateAPIView):
     queryset = Country.objects.all()
-    serializer_class = CountrySerializer
+    serializer_class = CountryListSerializer
 
 class CountryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Country.objects.all()
-    serializer_class = CountrySerializer
+    serializer_class = CountryDetailSerializer
 
 class CityList(generics.ListCreateAPIView):
     queryset = City.objects.all()
-    serializer_class = CitySerializer
+    serializer_class = CityListSerializer
 
 class CityDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = City.objects.all()
-    serializer_class = CitySerializer
+    serializer_class = CityDetailSerializer
 
 class NpcVOList(generics.ListCreateAPIView):
     queryset = NpcVO.objects.all()
-    serializer_class = NpcVOSerializer
+    serializer_class = NpcVOListSerializer
