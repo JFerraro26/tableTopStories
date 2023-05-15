@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './Mainpage';
 import Nav from './Nav/Nav';
-import WorldList from './world/WorldList';
-import WorldDetail from './world/WorldDetail';
+import WorldList from './world/details/WorldList';
+import WorldPage from './world/details/WorldPage';
+import WorldCreate from './world/create/WorldCreate';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
           <Route path='/' element={<MainPage />} />
           <Route path='/worlds'>
             <Route path='' element={<WorldList />} />
-            <Route path='detail' element={<WorldDetail />} />
+            <Route path='detail' element={<WorldPage />} />
+            <Route path='new' element={<WorldCreate />} />
           </Route>
         </Routes>
       </div>

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function NavMyContent() {
     const [open, setOpen] = useState(false)
@@ -18,7 +18,9 @@ function NavMyContent() {
             {open ? (
                 <div className="absolute top-auto w-48 mt-2 py-2 bg-white rounded-lg shadow-xl">
                     <NavLink onClick={handleOpen} className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white hover:rounded-lg" to="/worlds">Worlds</NavLink>
+                    <NavLink onClick={handleOpen} className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white hover:rounded-lg" to="/worlds/new">New World</NavLink>
                 </div>
+
             ) : null}
         </div>
     )

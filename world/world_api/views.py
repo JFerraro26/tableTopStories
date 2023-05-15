@@ -20,6 +20,8 @@ class CityListSerializer(serializers.ModelSerializer):
         fields = [
             "pk",
             "name",
+            "picture",
+            "description",
             "country",
         ]
 
@@ -42,7 +44,10 @@ class CountryListSerializer(serializers.ModelSerializer):
         fields = [
             "pk",
             "name",
+            "picture",
+            "description",
             "world",
+
         ]
 
 class CountryDetailSerializer(serializers.ModelSerializer):
@@ -64,6 +69,8 @@ class WorldListSerializer(serializers.ModelSerializer):
         fields = [
             "pk",
             "name",
+            "picture",
+            "description",
         ]
 
 class WorldDetailSerializer(serializers.ModelSerializer):
