@@ -71,13 +71,9 @@ function WorldPage() {
                 </div>
             </div>
             <div className='content col-end-5 col-span-3'>
-                {pageSelect == null ? (
-                    <WorldDetail /> ): null
-                }
-                {pageSelect == 1 ? (
-                    <CountryDetail country={data}/> ): null
-                }
-                {pageSelect == 2 ? (
+                {pageSelect === null ? (
+                    <WorldDetail world={world} /> ): pageSelect === 1 ? (
+                    <CountryDetail country={data}/> ): pageSelect === 2 ? (
                     <CityDetail city={data}/> ): null
                 }
             </div>

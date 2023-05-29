@@ -22,7 +22,8 @@ services:
       - table-top-stories:/var/lib/postgresql/data
     environment:
       - POSTGRES_MULTIPLE_DATABASES=account,note,npc,player_character,world
-      - POSTGRES_PASSWORD=databases
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=table
     ports:
       - 15432:5432
   world:

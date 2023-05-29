@@ -3,20 +3,37 @@ import { Link } from "react-router-dom";
 
 function WorldList() {
     const [worlds, setWorlds] = useState([])
-    const fetchWorldsData = async () => {
-        const response = await fetch("http://localhost:8060/api/worlds")
-        if (response.ok) {
-            const data = await response.json();
-            setWorlds(data)
+    useEffect(() => {
+        async function fetchWorldsData() {
+            const response = await fetch("http://localhost:8060/api/worlds")
+            if (response.ok) {
+                const data = await response.json();
+                setWorlds(data)
+            }
+            else {
+                console.error(response)
+            }
         }
-        else {
-            console.error(response)
-        }
-    }
-
-    useEffect(() =>{
         fetchWorldsData();
     }, [])
+
+    const DeleteButtonClick = async (world) => {
+        const confirm = window.confirm(`Are you sure you want to delete ${world.name}?`);
+        if (confirm) {
+            const worldPK = world.pk
+            const custUrl = `http://localhost:8060/api/worlds/${worldPK}`;
+            const fetchConfig = {method: "delete"};
+            const response = await fetch(custUrl, fetchConfig);
+            if (response.ok) {
+                const updatedWorlds = worlds.filter(item => item.pk !== worldPK);
+                setWorlds(updatedWorlds);
+            }
+            else {
+                console.error(response)
+            }
+
+        }
+    }
 
     return (
         <>
@@ -33,14 +50,14 @@ function WorldList() {
                         return (
                             <tr key={world.pk} className='border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600'>
                                 <td className='whitespace-nowrap px-6 py-4'>
-                                    <Link className='' state={{world : world}} to="/worlds/detail">{world.name}</Link>
+                                    <Link className='hover:text-blue-400' state={{world : world}} to="/worlds/detail">{world.name}</Link>
                                 </td>
                                 <td className='whitespace-nowrap px-6 py-4'>
                                     <div className="inline-flex">
-                                        <button className="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded">
+                                        <button className="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded" type='button'>
                                             Update
                                         </button>
-                                        <button className="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                                        <button onClick={()=>DeleteButtonClick(world)} className="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type='button'>
                                             Delete
                                         </button>
                                     </div>

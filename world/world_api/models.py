@@ -14,7 +14,7 @@ class Country(models.Model):
     world = models.ForeignKey(
         World,
         related_name="countries",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=50)
     picture = models.URLField(max_length=300, default="https://placehold.co/600x400", blank=True)
@@ -27,7 +27,7 @@ class City(models.Model):
     country = models.ForeignKey(
         Country,
         related_name="cities",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=50)
     picture = models.URLField(max_length=300, default="https://placehold.co/600x400", blank=True)
@@ -42,7 +42,7 @@ class NpcVO(models.Model):
     current_city = models.ForeignKey(
         City,
         related_name="npcs",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         blank=True,
     )
     def __str__(self):
