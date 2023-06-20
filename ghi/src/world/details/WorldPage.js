@@ -15,7 +15,7 @@ function WorldPage() {
 
     useEffect(() => {
         const fetchWorldData = async () => {
-            const response = await fetch(`${process.env.REACT_APP_API_HOST}/api//worlds/${worldPk}`)
+            const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/worlds/${worldPk}`)
             if (response.ok) {
                 const worldData = await response.json()
                 setWorld(worldData);
@@ -25,7 +25,7 @@ function WorldPage() {
             }
         }
         fetchWorldData();
-    }, [])
+    }, [worldPk])
 
 
 
@@ -52,7 +52,7 @@ function WorldPage() {
                         return (
                             <div key={country.pk} className='flex flex-col'>
                                 <button state={{country: country}} onClick={()=>{handleSideBar(country.pk); handlePageDetail(1); handleData(country)}} className='text-xl font-semibold hover:text-red-500'>{country.name}</button>
-                                {select == country.pk ? (
+                                {select === country.pk ? (
                                         <div key={country.pk} className='flex flex-col'>
                                         {country.cities.map(city => {
                                             return (

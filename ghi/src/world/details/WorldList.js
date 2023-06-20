@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setCreatedWorld } from '../../redux/slices/worldCreateSlice';
 
 function WorldList() {
     const [worlds, setWorlds] = useState([])
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     useEffect(() => {
         async function fetchWorldsData() {
-            const response = await fetch("http://localhost:8060/api/worlds")
+            const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/worlds`)
             if (response.ok) {
                 const data = await response.json();
                 setWorlds(data)
@@ -17,15 +21,14 @@ function WorldList() {
         fetchWorldsData();
     }, [])
 
-    const DeleteButtonClick = async (world) => {
+    const deleteButtonClick = async (world) => {
         const confirm = window.confirm(`Are you sure you want to delete ${world.name}?`);
         if (confirm) {
-            const worldPK = world.pk
-            const custUrl = `http://localhost:8060/api/worlds/${worldPK}`;
+            const worldUrl = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
             const fetchConfig = {method: "delete"};
-            const response = await fetch(custUrl, fetchConfig);
+            const response = await fetch(worldUrl, fetchConfig);
             if (response.ok) {
-                const updatedWorlds = worlds.filter(item => item.pk !== worldPK);
+                const updatedWorlds = worlds.filter(item => item.pk !== world.pk);
                 setWorlds(updatedWorlds);
             }
             else {
@@ -33,6 +36,11 @@ function WorldList() {
             }
 
         }
+    }
+
+    const editButtonClick = (world) => {
+        dispatch(setCreatedWorld(world));
+        navigate("/worlds/form")
     }
 
     return (
@@ -54,10 +62,10 @@ function WorldList() {
                                 </td>
                                 <td className='whitespace-nowrap px-6 py-4'>
                                     <div className="inline-flex">
-                                        <button className="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded" type='button'>
+                                        <button onClick={() => editButtonClick(world)} className="bg-transparent hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded" type='button'>
                                             Update
                                         </button>
-                                        <button onClick={()=>DeleteButtonClick(world)} className="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type='button'>
+                                        <button onClick={()=>deleteButtonClick(world)} className="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type='button'>
                                             Delete
                                         </button>
                                     </div>

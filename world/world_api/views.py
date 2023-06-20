@@ -64,6 +64,7 @@ class CountryDetailSerializer(serializers.ModelSerializer):
         ]
 
 class WorldListSerializer(serializers.ModelSerializer):
+    countries = CountryDetailSerializer(many=True, read_only=True)
     class Meta:
         model = World
         fields = [
@@ -71,7 +72,9 @@ class WorldListSerializer(serializers.ModelSerializer):
             "name",
             "picture",
             "description",
+            "countries",
         ]
+        depth = 1
 
 class WorldDetailSerializer(serializers.ModelSerializer):
     countries = CountryDetailSerializer(many=True, read_only=True)

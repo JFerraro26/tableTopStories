@@ -16,7 +16,7 @@ function App() {
           <Route path='/worlds'>
             <Route path='' element={<WorldList />} />
             <Route path='detail' element={<WorldPage />} />
-            <Route path='new' element={<BaseCreate />} />
+            <Route path='form' element={<BaseCreate />} />
           </Route>
         </Routes>
       </div>

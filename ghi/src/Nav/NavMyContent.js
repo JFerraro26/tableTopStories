@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {clearCreatedWorld} from '../redux/slices/worldCreateSlice';
 
 function NavMyContent() {
     const [open, setOpen] = useState(false)
+    const dispatch = useDispatch()
     const handleOpen = () => {
         setOpen(!open);
     };
@@ -18,7 +21,7 @@ function NavMyContent() {
             {open ? (
                 <div className="absolute top-auto w-48 mt-2 py-2 bg-white rounded-lg shadow-xl">
                     <NavLink onClick={handleOpen} className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white hover:rounded-lg" to="/worlds">Worlds</NavLink>
-                    <NavLink onClick={handleOpen} className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white hover:rounded-lg" to="/worlds/new">New World</NavLink>
+                    <NavLink onClick={()=>{handleOpen(); dispatch(clearCreatedWorld())}} className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white hover:rounded-lg" to="/worlds/form">New World</NavLink>
                 </div>
 
             ) : null}

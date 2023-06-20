@@ -1,53 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCreatedWorld } from '../../redux/slices/worldCreateSlice';
+import { getNewWorldEdit } from "../../redux/selectors/selectors";
 
 function WorldCreate() {
+    const [worldSubmited, setWorldSubmited] = useState(false)
+    const world = useSelector(getNewWorldEdit)
+    const [worldName, setWorldName] = useState("")
+    const [worldPic, setWorldPic] = useState("")
+    const [worldDescription, setWorldDescription] = useState("")
+
+    useEffect(() => {
+        if (world) {
+            setWorldName(world.name);
+            setWorldPic(world.picture);
+            setWorldDescription(world.description)
+            setWorldSubmited(true)
+        }
+        else {
+            setWorldName("")
+            setWorldPic("")
+            setWorldDescription("")
+            setWorldSubmited(false)
+        }
+    }, [world])
+
+    const dispatch = useDispatch()
     const handleWorldSubmit = async (event) => {
         event.preventDefault();
         const data = {};
         data.name = worldName;
         data.picture = worldPic;
         data.description = worldDescription;
-        if (worldSubmited) {
-            const worldPk = world.worldPk
-            var worldUrl = `http://localhost:8060/api/worlds/${worldPk}`
-            var worldFetchConfig = {
+        if (world) {
+            let worldUrlEdit = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`
+            let worldFetchConfigEdit = {
                 method: "put",
                 body: JSON.stringify(data),
                 headers: {
                   "Content-Type": "application/json",
                 },
               };
+              const responseEdit = await fetch(worldUrlEdit, worldFetchConfigEdit)
+        if (responseEdit.ok) {
+            const createdWorldEdit = await responseEdit.json()
+            dispatch(setCreatedWorld(createdWorldEdit))
+            setWorldSubmited(true)
         }
         else {
-            var worldUrl = "http://localhost:8060/api/worlds"
-            var worldFetchConfig = {
+            console.error(responseEdit)
+        }
+
+        }
+        else {
+            let worldUrl = `${process.env.REACT_APP_API_HOST}/api/worlds`
+            let worldFetchConfig = {
                 method: "post",
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
+            const response = await fetch(worldUrl, worldFetchConfig)
+            if (response.ok) {
+                const createdWorld = await response.json()
+                dispatch(setCreatedWorld(createdWorld))
+                setWorldSubmited(true)
+            }
+            else {
+                console.error(response)
+            }
         }
-        const response = await fetch(worldUrl, worldFetchConfig)
-        if (response.ok) {
-            const createdWorld = await response.json()
-            setWorld(createdWorld)
-            setWorldSubmited(true)
-        }
-        else {
-            console.error(response)
-        }
+
     }
 
-    const [worldSubmited, setWorldSubmited] = useState(false)
-    const [worldName, setWorldName] = useState("")
-    const [worldPic, setWorldPic] = useState("")
-    const [worldDescription, setWorldDescription] = useState("")
+
 
     return (
         <div className='grid grid-cols-5'>
             <div className='flex flex-col col-start-2 col-span-3 items-center'>
-                <h1>Create New World</h1>
+                <h1>World Form</h1>
                 <form onSubmit={handleWorldSubmit} className='flex flex-col w-full gap-2'>
                     <div className='flex flex-col'>
                         <label htmlFor="name">Name</label>
