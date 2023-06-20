@@ -1,5 +1,8 @@
 # Table Top Stories
 
+An Applicaton for World Building in table top games such as DnD and Pathfinder
+
+This is a work in progress
 
 
 ## Running the Project
