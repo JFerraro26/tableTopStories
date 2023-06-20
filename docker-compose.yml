@@ -14,6 +14,8 @@ services:
         HOST_OS: ${OS}
         NODE_ENV: development
         HOST: "0.0.0.0"
+        PUBLIC_URL: http://localhost:3000
+        REACT_APP_API_HOST: http://localhost:8060
   database:
     build:
       context: ./relational-data
@@ -21,7 +23,7 @@ services:
     volumes:
       - table-top-stories:/var/lib/postgresql/data
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=account,note,npc,player_character,world
+      - POSTGRES_MULTIPLE_DATABASES=world
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=table
     ports:
@@ -40,59 +42,3 @@ services:
       DATABASE_URL: postgres://world:password@database:5432/world
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
-  # account:
-  #   build:
-  #     context: ./account
-  #     dockerfile: ./Dockerfile.dev
-  #   ports:
-  #     - "8100:8000"
-  #   volumes:
-  #     - ./account:/app
-  #   depends_on:
-  #     - database
-  #   environment:
-  #     DATABASE_URL: postgres://account:password@database:5432/account
-  #     WAIT_HOSTS: database:5432
-  #     WAIT_TIMEOUT: 240
-  # note:
-  #   build:
-  #     context: ./note
-  #     dockerfile: ./Dockerfile.dev
-  #   ports:
-  #     - "8080:8000"
-  #   volumes:
-  #     - ./note:/app
-  #   depends_on:
-  #     - database
-  #   environment:
-  #     DATABASE_URL: postgres://note:password@database:5432/note
-  #     WAIT_HOSTS: database:5432
-  #     WAIT_TIMEOUT: 240
-  # npc:
-  #   build:
-  #     context: ./npc
-  #     dockerfile: ./Dockerfile.dev
-  #   ports:
-  #     - "8070:8000"
-  #   volumes:
-  #     - ./npc:/app
-  #   depends_on:
-  #     - database
-  #   environment:
-  #     DATABASE_URL: postgres://npc:password@database:5432/npc
-  #     WAIT_HOSTS: database:5432
-  #     WAIT_TIMEOUT: 240
-  # player_character:
-  #   build:
-  #     context: ./player_character
-  #     dockerfile: ./Dockerfile.dev
-  #   ports:
-  #     - "8060:8000"
-  #   volumes:
-  #     - ./player_character:/app
-  #   depends_on:
-  #     - database
-  #   environment:
-  #     DATABASE_URL: postgres://player_character:password@database:5432/player_character
-  #     WAIT_HOSTS: database:5432
-  #     WAIT_TIMEOUT: 240

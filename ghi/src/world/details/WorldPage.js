@@ -12,18 +12,18 @@ function WorldPage() {
     const [pageSelect, setPageSelect] = useState(null)
     const [data, setData] = useState()
 
-    const fetchWorldData = async () => {
-        const response = await fetch(`http://localhost:8060/api/worlds/${worldPk}`)
-        if (response.ok) {
-            const worldData = await response.json()
-            setWorld(worldData);
-        }
-        else {
-            console.error(response)
-        }
-    }
 
     useEffect(() => {
+        const fetchWorldData = async () => {
+            const response = await fetch(`${process.env.REACT_APP_API_HOST}/api//worlds/${worldPk}`)
+            if (response.ok) {
+                const worldData = await response.json()
+                setWorld(worldData);
+            }
+            else {
+                console.error(response)
+            }
+        }
         fetchWorldData();
     }, [])
 
