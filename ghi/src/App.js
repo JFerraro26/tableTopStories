@@ -3,7 +3,8 @@ import MainPage from './Mainpage';
 import Nav from './Nav/Nav';
 import WorldList from './world/details/WorldList';
 import WorldPage from './world/details/WorldPage';
-import WorldCreate from './world/create/WorldCreate';
+import BaseCreate from './world/create/BaseCreate';
+
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Route path='/worlds'>
             <Route path='' element={<WorldList />} />
             <Route path='detail' element={<WorldPage />} />
-            <Route path='new' element={<WorldCreate />} />
+            <Route path='new' element={<BaseCreate />} />
           </Route>
         </Routes>
       </div>

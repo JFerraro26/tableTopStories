@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import CountryCreate from './CountryCreate';
+import React, { useState } from 'react';
 
 function WorldCreate() {
     const handleWorldSubmit = async (event) => {
@@ -41,7 +40,6 @@ function WorldCreate() {
     }
 
     const [worldSubmited, setWorldSubmited] = useState(false)
-    const [world, setWorld] = useState()
     const [worldName, setWorldName] = useState("")
     const [worldPic, setWorldPic] = useState("")
     const [worldDescription, setWorldDescription] = useState("")
@@ -69,9 +67,6 @@ function WorldCreate() {
                     }
 
                 </form>
-            </div>
-            <div className='flex flex-col col-start-2 col-span-3 items-center mt-3'>
-                {worldSubmited ? (<CountryCreate world={world} />) :null}
             </div>
         </div>
     )
