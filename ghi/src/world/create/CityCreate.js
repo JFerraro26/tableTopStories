@@ -110,7 +110,7 @@ function CityCreate({ cityData, countryData }) {
 	};
 	return (
 		<div className="grid grid-cols-5">
-			<div className="flex flex-col col-start-2 col-span-3 items-center">
+			<div className="flex flex-col col-start-1 col-span-5 items-center m-5">
 				<h1>City Form</h1>
 				<form
 					onSubmit={handleCitySubmit}
@@ -159,21 +159,21 @@ function CityCreate({ cityData, countryData }) {
 						<div className="flex flex-row justify-around">
 							<button
 								type="submit"
-								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-full"
+								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
 								Edit
 							</button>
 							<button
 								onClick={() => deleteButtonClick(cityData)}
 								type="button"
-								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-full"
+								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
 								Delete
 							</button>
 						</div>
 					) : (
 						<div className="flex justify-center">
-							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full">
+							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
 								Add
 							</button>
 						</div>

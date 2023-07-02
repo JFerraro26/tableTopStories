@@ -93,8 +93,7 @@ function CountryCreate({ countryData }) {
 			const response = await fetch(countryUrl, countryFetchConfig);
 			if (response.ok) {
 				const createdCountry = await response.json();
-				createdCountry.cities = [];
-				dispatch(addCountryToCreatedWorld(createdCountry));
+				dispatch(addCountryToCreatedWorld({ country: createdCountry }));
 				setCountryName("");
 				setCountryImgURL("https://placehold.co/600x400");
 				setCountryDescription("");
@@ -106,7 +105,7 @@ function CountryCreate({ countryData }) {
 
 	return (
 		<div className="grid grid-cols-5">
-			<div className="flex flex-col col-start-2 col-span-3 items-center">
+			<div className="m-5 flex flex-col col-start-1 col-span-5 items-center">
 				<h1>Country Form</h1>
 				<form
 					onSubmit={handleCountrySubmit}
@@ -122,7 +121,7 @@ function CountryCreate({ countryData }) {
 							type="text"
 							id="country-name"
 							name="country-name"
-							placeholder="Country Name..."
+							placeholder=" Country Name..."
 						/>
 					</div>
 					<div className="flex flex-col">
@@ -134,7 +133,7 @@ function CountryCreate({ countryData }) {
 							type="text"
 							id="country-url"
 							name="country-url"
-							placeholder="Country Url..."
+							placeholder=" Country Url..."
 						/>
 					</div>
 					<div className="flex flex-col">
@@ -149,7 +148,7 @@ function CountryCreate({ countryData }) {
 							className="flex border"
 							type="text"
 							name="country-description"
-							placeholder="Country Description..."
+							placeholder=" Country Description..."
 							rows="7"
 						/>
 					</div>
@@ -158,21 +157,21 @@ function CountryCreate({ countryData }) {
 						<div className="flex flex-row justify-around">
 							<button
 								type="submit"
-								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-full"
+								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
 								Edit
 							</button>
 							<button
 								onClick={() => deleteButtonClick(countryData)}
 								type="button"
-								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-full"
+								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
 								Delete
 							</button>
 						</div>
 					) : (
 						<div className="flex justify-center">
-							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full">
+							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
 								Add
 							</button>
 						</div>

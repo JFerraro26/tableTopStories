@@ -7,7 +7,8 @@ from .views import (
     CountryDetail,
     CityList,
     CityDetail,
-    NpcVOList,
+    DistrictList,
+    DistrictDetail,
 )
 
 
@@ -18,7 +19,8 @@ urlpatterns = [
     path("countries/<int:pk>", CountryDetail.as_view()),
     path("cities", CityList.as_view()),
     path("cities/<int:pk>", CityDetail.as_view()),
-    path("npcs", NpcVOList.as_view()),
+    path("districts", DistrictList.as_view()),
+    path("districts/<int:pk>", DistrictDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

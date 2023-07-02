@@ -15,7 +15,8 @@ export const WorldCreateSlice = createSlice({
 			state.createdWorld = null;
 		},
 		addCountryToCreatedWorld: (state, action) => {
-			state.createdWorld.countries.push(action.payload);
+			const { country } = action.payload;
+			state.createdWorld.countries.push({ ...country, cities: [] });
 		},
 		editCountryInCreatedWorld: (state, action) => {
 			const { countryPk, updatedCountry } = action.payload;
@@ -37,14 +38,9 @@ export const WorldCreateSlice = createSlice({
 		},
 		addCityToCreatedWorld: (state, action) => {
 			const { countryPk, newCity } = action.payload;
-			const countryIndex = state.createdWorld.countries.findIndex(
-				(country) => country.pk === countryPk
-			);
-			if (countryIndex >= 0) {
-				state.createdWorld.countries[countryIndex].cities.push(newCity);
-			} else {
-				console.error("Something Went Wrong");
-			}
+			state.createdWorld.countries
+				.find((country) => country.pk === countryPk)
+				?.cities.push({ ...newCity, districts: [] });
 		},
 		editCityInCreatedWorld: (state, action) => {
 			const { countryPk, cityPk, updatedCity } = action.payload;
@@ -80,6 +76,13 @@ export const WorldCreateSlice = createSlice({
 			} else {
 				console.error("Cound Not Find Country Index");
 			}
+		},
+		addDistrictInCreatedWorld: (state, action) => {
+			const { countryPk, cityPk, newDistrict } = action.payload;
+			state.createdWorld.countries
+				.find((country) => country.pk === countryPk)
+				?.cities.find((city) => city.pk === cityPk)
+				?.districts.push(newDistrict);
 		},
 	},
 });

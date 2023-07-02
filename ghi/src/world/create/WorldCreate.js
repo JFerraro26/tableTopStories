@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreatedWorld } from "../../redux/slices/worldCreateSlice";
+import {
+	setCreatedWorld,
+	clearCreatedWorld,
+} from "../../redux/slices/worldCreateSlice";
 import { getNewWorldEdit } from "../../redux/selectors/selectors";
 
 function WorldCreate() {
@@ -72,10 +75,31 @@ function WorldCreate() {
 			}
 		}
 	};
+	const deleteButtonClick = async (world) => {
+		const confirm = window.confirm(
+			`Are you sure you want to delete ${world.name}?`
+		);
+		if (confirm) {
+			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
+			let fetchConfig = {
+				method: "delete",
+			};
+			const response = await fetch(countryUrl, fetchConfig);
+			if (response.ok) {
+				dispatch(clearCreatedWorld());
+				setWorldName("");
+				setWorldPic("https://placehold.co/600x400");
+				setWorldDescription("");
+				setSubmited(false);
+			} else {
+				console.error(response);
+			}
+		}
+	};
 
 	return (
 		<div className="grid grid-cols-5">
-			<div className="flex flex-col col-start-2 col-span-3 items-center">
+			<div className="m-5 flex flex-col col-start-1 col-span-5 items-center">
 				<h1>World Form</h1>
 				<form
 					onSubmit={handleWorldSubmit}
@@ -121,11 +145,23 @@ function WorldCreate() {
 						/>
 					</div>
 					{submited ? (
-						<button className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-full">
-							Edit
-						</button>
+						<div className="flex flex-row justify-around">
+							<button
+								type="submit"
+								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
+							>
+								Edit
+							</button>
+							<button
+								onClick={() => deleteButtonClick(world)}
+								type="button"
+								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
+							>
+								Delete
+							</button>
+						</div>
 					) : (
-						<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-full">
+						<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
 							Submit
 						</button>
 					)}
