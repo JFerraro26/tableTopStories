@@ -2,8 +2,9 @@
 
 An Applicaton for World Building in table top games such as DnD and Pathfinder
 
-This is a work in progress
+Main is the working branch
 
+Development is a work in progress
 
 ## Running the Project
 
@@ -11,7 +12,7 @@ To launch this application on your local machine, please ensure that you meet th
 
 #### Requirements:
 
--   Docker
+-   Docker Desktop
 -   Google Chrome or any browser
 
 #### Installation
@@ -29,15 +30,15 @@ To launch this application on your local machine, please ensure that you meet th
     cd table-top-stories
 ```
 
-4. While the terminal and run the following commands (Ensure Docker is running)
+4. Ensure Docker Desktop is Running
+
+5. While the terminal and run the following commands (Ensure Docker is running)
 
 ```
     1. docker-compose build
     2. docker-compose up
 ```
 
-5. There should be 3 containers that are running(The containers should be green)
-6. Wait until the terminal shows `You can now view app in the browser.`
-7. Open up Chrome(Browser) and type in `http://localhost:3000/` in the address bar.
-
----
+6. There should be 3 containers that are running(The containers should be green)
+7. Wait until the terminal shows `You can now view app in the browser.`
+8. Open up Chrome(Browser) and type in `http://localhost:3000` in the address bar.
