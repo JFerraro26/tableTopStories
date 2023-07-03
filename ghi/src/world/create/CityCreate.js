@@ -192,21 +192,21 @@ function CityCreate({ cityData, countryData }) {
 						<div className="flex flex-row justify-around">
 							<button
 								type="submit"
-								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
+								className="border w-1/4 border-orange-600 text-orange-600 hover:border-orange-400 hover:text-orange-400 rounded-full"
 							>
 								Edit City
 							</button>
 							<button
 								onClick={() => deleteButtonClick(cityData)}
 								type="button"
-								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
+								className="border w-1/4 border-red-600 text-red-600 hover:border-red-400 hover:text-red-400 rounded-full"
 							>
 								Delete City
 							</button>
 						</div>
 					) : (
 						<div className="flex justify-center">
-							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
+							<button className="border w-1/4 border-blue-600 text-blue-600 hover:border-blue-500 hover:text-blue-500 rounded-full">
 								Add City
 							</button>
 						</div>
