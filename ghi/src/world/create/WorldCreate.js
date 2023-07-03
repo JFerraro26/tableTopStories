@@ -100,48 +100,60 @@ function WorldCreate() {
 	return (
 		<div className="grid grid-cols-5">
 			<div className="m-5 flex flex-col col-start-1 col-span-5 items-center">
-				<h1>World Form</h1>
+				<h1 className="text-4xl font-bold">World Form</h1>
 				<form
 					onSubmit={handleWorldSubmit}
 					className="flex flex-col w-full gap-2"
 				>
 					<div className="flex flex-col">
-						<label htmlFor="name">Name</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="name"
+						>
+							Name
+						</label>
 						<input
 							value={worldName}
 							onChange={(e) => setWorldName(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							required
 							type="text"
 							id="name"
 							name="name"
-							placeholder="World Name..."
 						/>
 					</div>
 					<div className="flex flex-col ">
-						<label htmlFor="world-url">Picture Url</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="world-url"
+						>
+							Map Image URL
+						</label>
 						<input
 							value={worldPic}
 							onChange={(e) => setWorldPic(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							id="world-url"
 							name="world-url"
-							placeholder="World Url..."
 						/>
 					</div>
 					<div className="flex flex-col">
-						<label htmlFor="world-description">Description</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="world-description"
+						>
+							Description
+						</label>
 						<textarea
 							value={worldDescription}
 							onChange={(e) =>
 								setWorldDescription(e.target.value)
 							}
-							className="border min-h-10"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							name="world-description"
-							placeholder="Description..."
-							rows="7"
+							rows="10"
 						/>
 					</div>
 					{submited ? (
@@ -161,9 +173,11 @@ function WorldCreate() {
 							</button>
 						</div>
 					) : (
-						<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
-							Submit
-						</button>
+						<div className="flex justify-center">
+							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
+								Add
+							</button>
+						</div>
 					)}
 				</form>
 			</div>

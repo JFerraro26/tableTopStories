@@ -12,6 +12,7 @@ function CityCreate({ cityData, countryData }) {
 	const [cityName, setCityName] = useState("");
 	const [cityPicture, setCityPicture] = useState("");
 	const [cityDescription, setCityDescription] = useState("");
+	console.log(cityData);
 
 	useEffect(() => {
 		if (!cityData) {
@@ -27,12 +28,12 @@ function CityCreate({ cityData, countryData }) {
 		}
 	}, [cityData]);
 
-	const deleteButtonClick = async (cityData) => {
+	const deleteButtonClick = async (data) => {
 		const confirm = window.confirm(
-			`Are you sure you want to delete ${cityData.name}?`
+			`Are you sure you want to delete ${cityName}?`
 		);
 		if (confirm) {
-			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/countries/${countryData.pk}`;
+			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/cities/${data.pk}`;
 			let fetchConfig = {
 				method: "delete",
 			};
@@ -102,7 +103,10 @@ function CityCreate({ cityData, countryData }) {
 						newCity: createdCity,
 					})
 				);
-				setSubmitted(true);
+				setCityName("");
+				setCityDescription("");
+				setCityPicture("https://placehold.co/600x400");
+				setSubmitted(false);
 			} else {
 				console.error(response);
 			}
@@ -111,48 +115,58 @@ function CityCreate({ cityData, countryData }) {
 	return (
 		<div className="grid grid-cols-5">
 			<div className="flex flex-col col-start-1 col-span-5 items-center m-5">
-				<h1>City Form</h1>
+				<h1 className="text-4xl font-bold">City Form</h1>
 				<form
 					onSubmit={handleCitySubmit}
 					className="flex flex-col gap-2 w-full"
 				>
 					<div className="flex flex-col">
-						<label htmlFor="city-name">City Name</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="city-name"
+						>
+							Name
+						</label>
 						<input
 							value={cityName}
 							onChange={(e) => setCityName(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							required
 							type="text"
 							id="city-name"
 							name="city-name"
-							placeholder="City Name..."
 						/>
 					</div>
 					<div className="flex flex-col">
-						<label htmlFor="city-url">City Picture Url</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="city-url"
+						>
+							Image URL
+						</label>
 						<input
 							value={cityPicture}
 							onChange={(e) => setCityPicture(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							id="city-url"
 							name="city-url"
-							placeholder="City Picture Url..."
 						/>
 					</div>
 					<div className="flex flex-col">
-						<label htmlFor="city-description">
-							City Description
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="city-description"
+						>
+							Description
 						</label>
 						<textarea
 							value={cityDescription}
 							onChange={(e) => setCityDescription(e.target.value)}
-							className="flex border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							name="city-description"
-							placeholder="City Description..."
-							rows="7"
+							rows="10"
 						/>
 					</div>
 					{submitted ? (

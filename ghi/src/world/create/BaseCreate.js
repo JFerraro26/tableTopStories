@@ -9,8 +9,8 @@ import { useState, useEffect } from "react";
 function BaseCreate() {
 	const world = useSelector(getNewWorldEdit);
 	const [countrySideBar, setCountrySideBar] = useState("worldPage");
-	const [citySelect, setCitySelect] = useState("worldPage");
-	const [pageSelect, setPageSelect] = useState(null);
+	const [citySideBar, setcitySideBar] = useState("worldPage");
+	const [pageSelect, setPageSelect] = useState(1);
 	const [countryData, setCountryData] = useState(null);
 	const [cityData, setCityData] = useState(null);
 	const [districtData, setDistrictData] = useState(null);
@@ -18,13 +18,9 @@ function BaseCreate() {
 
 	useEffect(() => {
 		if (!world) {
-			setPageSelect(null);
+			setPageSelect(1);
 		}
 	}, [world]);
-
-	const handlePageDetail = (num) => {
-		setPageSelect(num);
-	};
 
 	const handleActive = (data) => {
 		setActive(data);
@@ -35,12 +31,12 @@ function BaseCreate() {
 			<div className="sidebar col-start-1 col-span-1 m-4">
 				<div className="grid grid-cols-1">
 					{world ? (
-						<div className="col-start-1">
+						<div className="col-start-1 my-2">
 							{active === "worldPage" ? (
 								<button
 									onClick={() => {
 										setCountrySideBar("worldPage");
-										handlePageDetail(null);
+										setPageSelect(1);
 										handleActive("worldPage");
 									}}
 									className="w-full pl-1 text-left text-2xl bg-red-600 rounded-md text-black font-semibold"
@@ -51,7 +47,7 @@ function BaseCreate() {
 								<button
 									onClick={() => {
 										setCountrySideBar("worldPage");
-										handlePageDetail(null);
+										setPageSelect(1);
 										handleActive("worldPage");
 									}}
 									className="w-full pl-1 text-left text-2xl font-semibold hover:text-red-500"
@@ -62,7 +58,7 @@ function BaseCreate() {
 						</div>
 					) : (
 						<div className="col-start-1">
-							<h5 className="text-2xl font-semibold bg-red-600 text-black rounded-md">
+							<h5 className="shadow-lg shadow-red-700 text-2xl font-semibold bg-red-600 text-black rounded-md">
 								Create a New World
 							</h5>
 						</div>
@@ -74,7 +70,7 @@ function BaseCreate() {
 								<button
 									onClick={() => {
 										setCountrySideBar("newCountry");
-										handlePageDetail(1);
+										setPageSelect(2);
 										setCountryData(null);
 										handleActive("newCountry");
 									}}
@@ -86,7 +82,7 @@ function BaseCreate() {
 								<button
 									onClick={() => {
 										setCountrySideBar("newCountry");
-										handlePageDetail(1);
+										setPageSelect(2);
 										setCountryData(null);
 										handleActive("newCountry");
 									}}
@@ -105,7 +101,7 @@ function BaseCreate() {
 										<button
 											onClick={() => {
 												setCountrySideBar(country.pk);
-												handlePageDetail(1);
+												setPageSelect(2);
 												setCountryData(country);
 												handleActive(
 													`country${country.pk}`
@@ -119,7 +115,7 @@ function BaseCreate() {
 										<button
 											onClick={() => {
 												setCountrySideBar(country.pk);
-												handlePageDetail(1);
+												setPageSelect(2);
 												setCountryData(country);
 												handleActive(
 													`country${country.pk}`
@@ -136,7 +132,7 @@ function BaseCreate() {
 												{active === "newCity" ? (
 													<button
 														onClick={() => {
-															handlePageDetail(2);
+															setPageSelect(3);
 															setCountryData(
 																country
 															);
@@ -145,14 +141,14 @@ function BaseCreate() {
 																"newCity"
 															);
 														}}
-														className="text-base text-left pl-8 font-semibold w-full bg-red-600 text-black rounded-md"
+														className="text-lg text-left pl-8 font-semibold w-full bg-red-600 text-black rounded-md"
 													>
 														Create New City
 													</button>
 												) : (
 													<button
 														onClick={() => {
-															handlePageDetail(2);
+															setPageSelect(3);
 															setCountryData(
 																country
 															);
@@ -161,7 +157,7 @@ function BaseCreate() {
 																"newCity"
 															);
 														}}
-														className="text-base pl-8 text-left w-full font-semibold hover:text-red-500"
+														className="text-lg pl-8 text-left w-full font-semibold hover:text-red-500"
 													>
 														Create New City
 													</button>
@@ -177,8 +173,8 @@ function BaseCreate() {
 														`city${city.pk}` ? (
 															<button
 																onClick={() => {
-																	handlePageDetail(
-																		2
+																	setPageSelect(
+																		3
 																	);
 																	setCountryData(
 																		country
@@ -189,19 +185,19 @@ function BaseCreate() {
 																	handleActive(
 																		`city${city.pk}`
 																	);
-																	setCitySelect(
+																	setcitySideBar(
 																		`city${city.pk}`
 																	);
 																}}
-																className="text-base pl-8 text-left font-semibold w-full bg-red-600 text-black rounded-md"
+																className="text-lg pl-8 text-left font-semibold w-full bg-red-600 text-black rounded-md"
 															>
 																{city.name}
 															</button>
 														) : (
 															<button
 																onClick={() => {
-																	handlePageDetail(
-																		2
+																	setPageSelect(
+																		3
 																	);
 																	setCountryData(
 																		country
@@ -212,16 +208,16 @@ function BaseCreate() {
 																	handleActive(
 																		`city${city.pk}`
 																	);
-																	setCitySelect(
+																	setcitySideBar(
 																		`city${city.pk}`
 																	);
 																}}
-																className="text-base pl-8 text-left font-semibold w-full hover:text-red-500"
+																className="text-lg pl-8 text-left font-semibold w-full hover:text-red-500"
 															>
 																{city.name}
 															</button>
 														)}
-														{citySelect ===
+														{citySideBar ===
 														`city${city.pk}` ? (
 															<div
 																key={city.pk}
@@ -232,8 +228,8 @@ function BaseCreate() {
 																	"newDistrict" ? (
 																		<button
 																			onClick={() => {
-																				handlePageDetail(
-																					3
+																				setPageSelect(
+																					4
 																				);
 																				setCountryData(
 																					country
@@ -257,8 +253,8 @@ function BaseCreate() {
 																	) : (
 																		<button
 																			onClick={() => {
-																				handlePageDetail(
-																					3
+																				setPageSelect(
+																					4
 																				);
 																				setCountryData(
 																					country
@@ -281,6 +277,61 @@ function BaseCreate() {
 																		</button>
 																	)}
 																</div>
+																{city.districts?.map(
+																	(
+																		district
+																	) => {
+																		return (
+																			<div
+																				key={
+																					district.pk
+																				}
+																				className="col-start-1"
+																			>
+																				{active ===
+																				`district${district.pk}` ? (
+																					<button
+																						onClick={() => {
+																							setPageSelect(
+																								4
+																							);
+																							setDistrictData(
+																								district
+																							);
+																							handleActive(
+																								`district${district.pk}`
+																							);
+																						}}
+																						className="text-base pl-12 text-left font-semibold w-full bg-red-600 text-black rounded-md"
+																					>
+																						{
+																							district.name
+																						}
+																					</button>
+																				) : (
+																					<button
+																						onClick={() => {
+																							setPageSelect(
+																								4
+																							);
+																							setDistrictData(
+																								district
+																							);
+																							handleActive(
+																								`district${district.pk}`
+																							);
+																						}}
+																						className="text-base pl-12 text-left font-semibold w-full hover:text-red-500"
+																					>
+																						{
+																							district.name
+																						}
+																					</button>
+																				)}
+																			</div>
+																		);
+																	}
+																)}
 															</div>
 														) : null}
 													</div>
@@ -295,13 +346,13 @@ function BaseCreate() {
 				</div>
 			</div>
 			<div className="content col-start-2 col-span-4">
-				{pageSelect === null ? (
+				{pageSelect === 1 ? (
 					<WorldCreate />
-				) : pageSelect === 1 ? (
-					<CountryCreate countryData={countryData} />
 				) : pageSelect === 2 ? (
-					<CityCreate cityData={cityData} countryData={countryData} />
+					<CountryCreate countryData={countryData} />
 				) : pageSelect === 3 ? (
+					<CityCreate cityData={cityData} countryData={countryData} />
+				) : pageSelect === 4 ? (
 					<DistrictCreate
 						cityData={cityData}
 						countryData={countryData}

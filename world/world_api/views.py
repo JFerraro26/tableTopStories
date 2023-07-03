@@ -134,10 +134,12 @@ class CityDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = City.objects.all()
     serializer_class = CityDetailSerializer
 
+
 class DistrictList(generics.ListCreateAPIView):
     queryset = District.objects.all()
     serializer_class = DistrictListSerializer
 
-class DistrictDetail(generics.RetrieveDestroyAPIView):
+
+class DistrictDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = District.objects.all()
     serializer_class = DistrictDetailSerializer

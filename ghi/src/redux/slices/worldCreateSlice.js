@@ -26,7 +26,7 @@ export const WorldCreateSlice = createSlice({
 			if (countryIndex >= 0) {
 				state.createdWorld.countries[countryIndex] = updatedCountry;
 			} else {
-				console.error("Could Not Find Country Index");
+				console.error("Redux Error Could Not Find Country Index");
 			}
 		},
 		deleteCountryInCreatedWorld: (state, action) => {
@@ -56,10 +56,10 @@ export const WorldCreateSlice = createSlice({
 						cityIndex
 					] = updatedCity;
 				} else {
-					console.error("Could Not Find City Index");
+					console.error("Redux Error Could Not Find City Index");
 				}
 			} else {
-				console.error("Could Not Find Country Index");
+				console.error("Redux Error Could Not Find Country Index");
 			}
 		},
 		deleteCityInCreatedWorld: (state, action) => {
@@ -74,7 +74,7 @@ export const WorldCreateSlice = createSlice({
 				state.createdWorld.countries[countryIndex].cities =
 					updatedCites;
 			} else {
-				console.error("Cound Not Find Country Index");
+				console.error("Redux Error Could Not Find Country Index");
 			}
 		},
 		addDistrictInCreatedWorld: (state, action) => {
@@ -83,6 +83,63 @@ export const WorldCreateSlice = createSlice({
 				.find((country) => country.pk === countryPk)
 				?.cities.find((city) => city.pk === cityPk)
 				?.districts.push(newDistrict);
+		},
+		editDistrictInCreatedWorld: (state, action) => {
+			const { countryPk, cityPk, districtPk, updatedDistrict } =
+				action.payload;
+			const countryIndex = state.createdWorld.countries.findIndex(
+				(country) => country.pk === countryPk
+			);
+			if (countryIndex >= 0) {
+				const cityIndex = state.createdWorld.countries[
+					countryIndex
+				].cities.findIndex((city) => city.pk === cityPk);
+				if (cityIndex >= 0) {
+					const districtIndex = state.createdWorld.countries[
+						countryIndex
+					].cities[cityIndex].districts.findIndex(
+						(district) => district.pk === districtPk
+					);
+					if (districtIndex >= 0) {
+						state.createdWorld.countries[countryIndex].cities[
+							cityIndex
+						].districts[districtIndex] = updatedDistrict;
+					} else {
+						console.error(
+							"Redux Error Could not find District Index"
+						);
+					}
+				} else {
+					console.error("Redux Error Could not find City Index");
+				}
+			} else {
+				console.error("Redux Error Could not find Country Index");
+			}
+		},
+		deleteDistrictInCreatedWorld: (state, action) => {
+			const { countryPk, cityPk, districtPk } = action.payload;
+			const countryIndex = state.createdWorld.countries.findIndex(
+				(country) => country.pk === countryPk
+			);
+			if (countryIndex >= 0) {
+				const cityIndex = state.createdWorld.countries[
+					countryIndex
+				].cities.findIndex((city) => city.pk === cityPk);
+				if (cityIndex >= 0) {
+					const updatedDistricts = state.createdWorld.countries[
+						countryIndex
+					].cities[cityIndex].districts.filter(
+						(district) => district.pk !== districtPk
+					);
+					state.createdWorld.countries[countryIndex].cities[
+						cityIndex
+					].districts = updatedDistricts;
+				} else {
+					console.error("Redux Error Could Not Find City Index");
+				}
+			} else {
+				console.error("Redux Error Could Not Find Country Index");
+			}
 		},
 	},
 });
@@ -96,6 +153,9 @@ export const {
 	editCityInCreatedWorld,
 	deleteCountryInCreatedWorld,
 	deleteCityInCreatedWorld,
+	addDistrictInCreatedWorld,
+	editDistrictInCreatedWorld,
+	deleteDistrictInCreatedWorld,
 } = WorldCreateSlice.actions;
 
 export default WorldCreateSlice.reducer;

@@ -31,7 +31,7 @@ function CountryCreate({ countryData }) {
 
 	const deleteButtonClick = async (countryData) => {
 		const confirm = window.confirm(
-			`Are you sure you want to delete ${countryData.name}?`
+			`Are you sure you want to delete ${countryName}?`
 		);
 		if (confirm) {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/countries/${countryData.pk}`;
@@ -106,30 +106,39 @@ function CountryCreate({ countryData }) {
 	return (
 		<div className="grid grid-cols-5">
 			<div className="m-5 flex flex-col col-start-1 col-span-5 items-center">
-				<h1>Country Form</h1>
+				<h1 className="text-4xl font-bold">Country Form</h1>
 				<form
 					onSubmit={handleCountrySubmit}
 					className="flex flex-col gap-2 w-full"
 				>
 					<div className="flex flex-col">
-						<label htmlFor="country-name">Country Name</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="country-name"
+						>
+							Name
+						</label>
 						<input
 							value={countryName}
 							onChange={(e) => setCountryName(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							required
 							type="text"
 							id="country-name"
 							name="country-name"
-							placeholder=" Country Name..."
 						/>
 					</div>
 					<div className="flex flex-col">
-						<label htmlFor="country-url">Country Picture Url</label>
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="country-url"
+						>
+							Image URL
+						</label>
 						<input
 							value={countryImgURL}
 							onChange={(e) => setCountryImgURL(e.target.value)}
-							className="border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							id="country-url"
 							name="country-url"
@@ -137,19 +146,21 @@ function CountryCreate({ countryData }) {
 						/>
 					</div>
 					<div className="flex flex-col">
-						<label htmlFor="country-description">
-							Country Description
+						<label
+							className="my-2 px-2 font-semibold text-2xl"
+							htmlFor="country-description"
+						>
+							Description
 						</label>
 						<textarea
 							value={countryDescription}
 							onChange={(e) =>
 								setCountryDescription(e.target.value)
 							}
-							className="flex border"
+							className="rounded-lg text-lg p-2 bg-slate-900 border border-black focus:outline-none focus:border-red-600"
 							type="text"
 							name="country-description"
-							placeholder=" Country Description..."
-							rows="7"
+							rows="10"
 						/>
 					</div>
 
