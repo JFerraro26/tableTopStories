@@ -5,6 +5,7 @@ import {
 	editCityInCreatedWorld,
 	deleteCityInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
+import { motion, AnimatePresence } from "framer-motion";
 
 function CityCreate({ cityData, countryData }) {
 	const dispatch = useDispatch();
@@ -12,7 +13,8 @@ function CityCreate({ cityData, countryData }) {
 	const [cityName, setCityName] = useState("");
 	const [cityPicture, setCityPicture] = useState("");
 	const [cityDescription, setCityDescription] = useState("");
-	console.log(cityData);
+	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+	const [successfulEdit, setSuccessfulEdit] = useState(false);
 
 	useEffect(() => {
 		if (!cityData) {
@@ -54,6 +56,21 @@ function CityCreate({ cityData, countryData }) {
 			}
 		}
 	};
+	useEffect(() => {
+		if (successfulSubmit) {
+			setTimeout(() => {
+				setSuccessfulSubmit(false);
+			}, 3000);
+		}
+	}, [successfulSubmit]);
+
+	useEffect(() => {
+		if (successfulEdit) {
+			setTimeout(() => {
+				setSuccessfulEdit(false);
+			}, 3000);
+		}
+	}, [successfulEdit]);
 
 	const handleCitySubmit = async (event) => {
 		event.preventDefault();
@@ -81,6 +98,7 @@ function CityCreate({ cityData, countryData }) {
 						updatedCity: editCity,
 					})
 				);
+				setSuccessfulEdit(true);
 				setSubmitted(true);
 			} else {
 				console.error(editResponse);
@@ -106,6 +124,7 @@ function CityCreate({ cityData, countryData }) {
 				setCityName("");
 				setCityDescription("");
 				setCityPicture("https://placehold.co/600x400");
+				setSuccessfulSubmit(true);
 				setSubmitted(false);
 			} else {
 				console.error(response);
@@ -175,24 +194,58 @@ function CityCreate({ cityData, countryData }) {
 								type="submit"
 								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
-								Edit
+								Edit City
 							</button>
 							<button
 								onClick={() => deleteButtonClick(cityData)}
 								type="button"
 								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
-								Delete
+								Delete City
 							</button>
 						</div>
 					) : (
 						<div className="flex justify-center">
 							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
-								Add
+								Add City
 							</button>
 						</div>
 					)}
 				</form>
+				<div>
+					<AnimatePresence>
+						{successfulSubmit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								City Successfully Created!!!!
+							</motion.h1>
+						) : null}
+						{successfulEdit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								City Edited Successfully!!!!
+							</motion.h1>
+						) : null}
+					</AnimatePresence>
+				</div>
 			</div>
 		</div>
 	);

@@ -6,6 +6,7 @@ import {
 	deleteCountryInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
 import { getNewWorldEdit } from "../../redux/selectors/selectors";
+import { motion, AnimatePresence } from "framer-motion";
 
 function CountryCreate({ countryData }) {
 	const world = useSelector(getNewWorldEdit);
@@ -13,6 +14,9 @@ function CountryCreate({ countryData }) {
 	const [countryImgURL, setCountryImgURL] = useState("");
 	const [countryDescription, setCountryDescription] = useState("");
 	const [submitted, setSubmitted] = useState(false);
+	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+	const [successfulEdit, setSuccessfulEdit] = useState(false);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -80,6 +84,7 @@ function CountryCreate({ countryData }) {
 						updatedCountry: updatedCountry,
 					})
 				);
+				setSuccessfulEdit(true);
 			}
 		} else {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/countries`;
@@ -97,11 +102,27 @@ function CountryCreate({ countryData }) {
 				setCountryName("");
 				setCountryImgURL("https://placehold.co/600x400");
 				setCountryDescription("");
+				setSuccessfulSubmit(true);
 			} else {
 				console.error(response);
 			}
 		}
 	};
+	useEffect(() => {
+		if (successfulSubmit) {
+			setTimeout(() => {
+				setSuccessfulSubmit(false);
+			}, 3000);
+		}
+	}, [successfulSubmit]);
+
+	useEffect(() => {
+		if (successfulEdit) {
+			setTimeout(() => {
+				setSuccessfulEdit(false);
+			}, 3000);
+		}
+	}, [successfulEdit]);
 
 	return (
 		<div className="grid grid-cols-5">
@@ -165,29 +186,63 @@ function CountryCreate({ countryData }) {
 					</div>
 
 					{submitted ? (
-						<div className="flex flex-row justify-around">
+						<div className="my-2 flex flex-row justify-around">
 							<button
 								type="submit"
 								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
-								Edit
+								Edit Country
 							</button>
 							<button
 								onClick={() => deleteButtonClick(countryData)}
 								type="button"
 								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
-								Delete
+								Delete Country
 							</button>
 						</div>
 					) : (
-						<div className="flex justify-center">
+						<div className="my-2 flex justify-center">
 							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
-								Add
+								Add Country
 							</button>
 						</div>
 					)}
 				</form>
+				<div>
+					<AnimatePresence>
+						{successfulSubmit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								Country Successfully Created!!!!
+							</motion.h1>
+						) : null}
+						{successfulEdit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								Country Edited Successfully!!!!
+							</motion.h1>
+						) : null}
+					</AnimatePresence>
+				</div>
 			</div>
 		</div>
 	);

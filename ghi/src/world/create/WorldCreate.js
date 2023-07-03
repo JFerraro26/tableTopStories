@@ -5,6 +5,7 @@ import {
 	clearCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
 import { getNewWorldEdit } from "../../redux/selectors/selectors";
+import { motion, AnimatePresence } from "framer-motion";
 
 function WorldCreate() {
 	const [submited, setSubmited] = useState(false);
@@ -12,6 +13,8 @@ function WorldCreate() {
 	const [worldName, setWorldName] = useState("");
 	const [worldPic, setWorldPic] = useState("https://placehold.co/600x400");
 	const [worldDescription, setWorldDescription] = useState("");
+	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+	const [successfulEdit, setSuccessfulEdit] = useState(false);
 
 	useEffect(() => {
 		if (world) {
@@ -26,6 +29,22 @@ function WorldCreate() {
 			setSubmited(false);
 		}
 	}, [world]);
+
+	useEffect(() => {
+		if (successfulSubmit) {
+			setTimeout(() => {
+				setSuccessfulSubmit(false);
+			}, 3000);
+		}
+	}, [successfulSubmit]);
+
+	useEffect(() => {
+		if (successfulEdit) {
+			setTimeout(() => {
+				setSuccessfulEdit(false);
+			}, 3000);
+		}
+	}, [successfulEdit]);
 
 	const dispatch = useDispatch();
 	const handleWorldSubmit = async (event) => {
@@ -51,6 +70,7 @@ function WorldCreate() {
 				const createdWorldEdit = await responseEdit.json();
 				createdWorldEdit.countries = world.countries;
 				dispatch(setCreatedWorld(createdWorldEdit));
+				setSuccessfulEdit(true);
 				setSubmited(true);
 			} else {
 				console.error(responseEdit);
@@ -69,6 +89,7 @@ function WorldCreate() {
 				const createdWorld = await response.json();
 				createdWorld.countries = [];
 				dispatch(setCreatedWorld(createdWorld));
+				setSuccessfulSubmit(true);
 				setSubmited(true);
 			} else {
 				console.error(response);
@@ -157,29 +178,63 @@ function WorldCreate() {
 						/>
 					</div>
 					{submited ? (
-						<div className="flex flex-row justify-around">
+						<div className="my-2 flex flex-row justify-around">
 							<button
 								type="submit"
 								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
-								Edit
+								Edit World
 							</button>
 							<button
 								onClick={() => deleteButtonClick(world)}
 								type="button"
 								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
-								Delete
+								Delete World
 							</button>
 						</div>
 					) : (
-						<div className="flex justify-center">
+						<div className="my-2 flex justify-center">
 							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
-								Add
+								Add World
 							</button>
 						</div>
 					)}
 				</form>
+				<div>
+					<AnimatePresence>
+						{successfulSubmit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								World Successfully Created!!!!
+							</motion.h1>
+						) : null}
+						{successfulEdit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								World Edited Successfully!!!!
+							</motion.h1>
+						) : null}
+					</AnimatePresence>
+				</div>
 			</div>
 		</div>
 	);

@@ -39,7 +39,7 @@ function BaseCreate() {
 										setPageSelect(1);
 										handleActive("worldPage");
 									}}
-									className="w-full pl-1 text-left text-2xl bg-red-600 rounded-md text-black font-semibold"
+									className="w-full text-left text-2xl bg-red-600 rounded-md text-black font-semibold"
 								>
 									{world?.name}
 								</button>
@@ -50,7 +50,7 @@ function BaseCreate() {
 										setPageSelect(1);
 										handleActive("worldPage");
 									}}
-									className="w-full pl-1 text-left text-2xl font-semibold hover:text-red-500"
+									className="w-full text-left text-2xl font-semibold hover:text-red-500"
 								>
 									{world?.name}
 								</button>
@@ -74,7 +74,7 @@ function BaseCreate() {
 										setCountryData(null);
 										handleActive("newCountry");
 									}}
-									className="text-left pl-4 text-xl w-full font-semibold bg-red-600 text-black rounded-md"
+									className="text-left pl-6 text-xl w-full font-semibold bg-red-600 text-black rounded-md"
 								>
 									Create New Country
 								</button>
@@ -86,7 +86,7 @@ function BaseCreate() {
 										setCountryData(null);
 										handleActive("newCountry");
 									}}
-									className="pl-4 text-xl text-left w-full font-semibold hover:text-red-500"
+									className="pl-6 text-xl text-left w-full font-semibold hover:text-red-500"
 								>
 									Create New Country
 								</button>
@@ -107,7 +107,7 @@ function BaseCreate() {
 													`country${country.pk}`
 												);
 											}}
-											className="text-xl font-semibold text-left pl-4 w-full bg-red-600 text-black rounded-md"
+											className="text-xl font-semibold text-left pl-6 w-full bg-red-600 text-black rounded-md"
 										>
 											{country.name}
 										</button>
@@ -121,7 +121,7 @@ function BaseCreate() {
 													`country${country.pk}`
 												);
 											}}
-											className="text-xl text-left pl-4 font-semibold w-full hover:text-red-500"
+											className="text-xl text-left pl-6 font-semibold w-full hover:text-red-500"
 										>
 											{country.name}
 										</button>
@@ -141,7 +141,7 @@ function BaseCreate() {
 																"newCity"
 															);
 														}}
-														className="text-lg text-left pl-8 font-semibold w-full bg-red-600 text-black rounded-md"
+														className="text-lg text-left pl-10 font-semibold w-full bg-red-600 text-black rounded-md"
 													>
 														Create New City
 													</button>
@@ -157,7 +157,7 @@ function BaseCreate() {
 																"newCity"
 															);
 														}}
-														className="text-lg pl-8 text-left w-full font-semibold hover:text-red-500"
+														className="text-lg pl-10 text-left w-full font-semibold hover:text-red-500"
 													>
 														Create New City
 													</button>
@@ -189,7 +189,7 @@ function BaseCreate() {
 																		`city${city.pk}`
 																	);
 																}}
-																className="text-lg pl-8 text-left font-semibold w-full bg-red-600 text-black rounded-md"
+																className="text-lg pl-10 text-left font-semibold w-full bg-red-600 text-black rounded-md"
 															>
 																{city.name}
 															</button>
@@ -212,7 +212,7 @@ function BaseCreate() {
 																		`city${city.pk}`
 																	);
 																}}
-																className="text-lg pl-8 text-left font-semibold w-full hover:text-red-500"
+																className="text-lg pl-10 text-left font-semibold w-full hover:text-red-500"
 															>
 																{city.name}
 															</button>
@@ -244,7 +244,7 @@ function BaseCreate() {
 																					"newDistrict"
 																				);
 																			}}
-																			className="text-base text-left pl-12 font-semibold w-full bg-red-600 text-black rounded-md"
+																			className="text-base text-left pl-14 font-semibold w-full bg-red-600 text-black rounded-md"
 																		>
 																			Create
 																			New
@@ -269,7 +269,7 @@ function BaseCreate() {
 																					"newDistrict"
 																				);
 																			}}
-																			className="text-base pl-12 text-left w-full font-semibold hover:text-red-500"
+																			className="text-base pl-14 text-left w-full font-semibold hover:text-red-500"
 																		>
 																			Create
 																			New
@@ -302,7 +302,7 @@ function BaseCreate() {
 																								`district${district.pk}`
 																							);
 																						}}
-																						className="text-base pl-12 text-left font-semibold w-full bg-red-600 text-black rounded-md"
+																						className="text-base pl-14 text-left font-semibold w-full bg-red-600 text-black rounded-md"
 																					>
 																						{
 																							district.name
@@ -321,7 +321,7 @@ function BaseCreate() {
 																								`district${district.pk}`
 																							);
 																						}}
-																						className="text-base pl-12 text-left font-semibold w-full hover:text-red-500"
+																						className="text-base pl-14 text-left font-semibold w-full hover:text-red-500"
 																					>
 																						{
 																							district.name

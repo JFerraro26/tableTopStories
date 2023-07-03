@@ -5,6 +5,7 @@ import {
 	editDistrictInCreatedWorld,
 	deleteDistrictInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
+import { motion, AnimatePresence } from "framer-motion";
 
 function DistrictCreate({ cityData, countryData, districtData }) {
 	const dispatch = useDispatch();
@@ -12,8 +13,8 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 	const [districtName, setDistrictName] = useState("");
 	const [districtPicture, setDistrictPicture] = useState("");
 	const [districtDescription, setDistrictDescription] = useState("");
-
-	console.log(districtData);
+	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+	const [successfulEdit, setSuccessfulEdit] = useState(false);
 
 	useEffect(() => {
 		if (!districtData) {
@@ -59,6 +60,7 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 						updatedDistrict: editDistrict,
 					})
 				);
+				setSuccessfulEdit(true);
 				setSubmitted(true);
 			} else {
 				console.error(editResponse);
@@ -85,12 +87,28 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 				setDistrictName("");
 				setDistrictPicture("https://placehold.co/600x400");
 				setDistrictDescription("");
+				setSuccessfulSubmit(true);
 				setSubmitted(false);
 			} else {
 				console.error(response);
 			}
 		}
 	};
+	useEffect(() => {
+		if (successfulSubmit) {
+			setTimeout(() => {
+				setSuccessfulSubmit(false);
+			}, 3000);
+		}
+	}, [successfulSubmit]);
+
+	useEffect(() => {
+		if (successfulEdit) {
+			setTimeout(() => {
+				setSuccessfulEdit(false);
+			}, 3000);
+		}
+	}, [successfulEdit]);
 
 	const deleteButtonClick = async (data) => {
 		const confirm = window.confirm(
@@ -185,24 +203,58 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 								type="submit"
 								className="border w-1/3 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black rounded-full"
 							>
-								Edit
+								Edit District
 							</button>
 							<button
 								onClick={() => deleteButtonClick(districtData)}
 								type="button"
 								className="border w-1/3 border-red-500 text-red-500 hover:bg-red-500 hover:text-black rounded-full"
 							>
-								Delete
+								Delete District
 							</button>
 						</div>
 					) : (
 						<div className="flex justify-center">
 							<button className="border w-1/3 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-black rounded-full">
-								Add
+								Add District
 							</button>
 						</div>
 					)}
 				</form>
+				<div>
+					<AnimatePresence>
+						{successfulSubmit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								City Successfully Created!!!!
+							</motion.h1>
+						) : null}
+						{successfulEdit ? (
+							<motion.h1
+								className="m-4 rounded-xl text-white bg-green-600 text-4xl p-6"
+								key="Created"
+								initial={{ x: "100vw" }}
+								animate={{ x: 0 }}
+								transition={{ duration: 1 }}
+								exit={{
+									x: "100vw",
+									transition: { duration: 2 },
+								}}
+							>
+								City Edited Successfully!!!!
+							</motion.h1>
+						) : null}
+					</AnimatePresence>
+				</div>
 			</div>
 		</div>
 	);
