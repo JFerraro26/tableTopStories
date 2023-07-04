@@ -4,6 +4,7 @@ import WorldDetail from "./WorldDetail";
 import CountryDetail from "./CountryDetail";
 import CityDetail from "./CityDetail";
 import DistrictDetail from "./DistrictDetail";
+import { motion, AnimatePresence } from "framer-motion";
 
 function WorldPage() {
 	let { state } = useLocation();
@@ -40,76 +41,65 @@ function WorldPage() {
 			<div className="sidebar col-start-1 col-span-1 m-4">
 				<div className="grid grid-cols-1">
 					<div className="col-start-1 my-2">
-						{active === "worldPage" ? (
-							<button
-								onClick={() => {
-									setCountrySideBar("worldPage");
-									setPageSelect(1);
-									handleActive("worldPage");
-								}}
-								className="w-full text-left text-2xl bg-red-600 rounded-md text-black font-semibold"
-							>
-								{world?.name}
-							</button>
-						) : (
-							<button
-								onClick={() => {
-									setCountrySideBar("worldPage");
-									setPageSelect(1);
-									handleActive("worldPage");
-								}}
-								className="w-full text-left text-2xl font-semibold hover:text-red-500"
-							>
-								{world?.name}
-							</button>
-						)}
+						<button
+							onClick={() => {
+								setCountrySideBar("worldPage");
+								setPageSelect(1);
+								handleActive("worldPage");
+							}}
+							className={`w-full text-left text-2xl  font-semibold ${
+								active === "worldPage"
+									? "text-shadow shadow-white text-blue-600"
+									: "hover:text-red-500"
+							}`}
+						>
+							{world?.name}
+						</button>
 					</div>
 					<div className="col-start-1">
 						{world?.countries?.map((country) => {
 							return (
 								<div key={`country${country.pk}`}>
-									{active === `country${country.pk}` ? (
-										<button
-											onClick={() => {
-												setCountrySideBar(
-													`country${country.pk}`
-												);
-												setPageSelect(2);
-												setCountryData(country);
-												handleActive(
-													`country${country.pk}`
-												);
-											}}
-											className="text-xl font-semibold text-left pl-6 w-full bg-red-600 text-black rounded-md"
-										>
-											{country.name}
-										</button>
-									) : (
-										<button
-											onClick={() => {
-												setCountrySideBar(
-													`country${country.pk}`
-												);
-												setPageSelect(2);
-												setCountryData(country);
-												handleActive(
-													`country${country.pk}`
-												);
-											}}
-											className="text-xl text-left pl-6 font-semibold w-full hover:text-red-500"
-										>
-											{country.name}
-										</button>
-									)}
-									{countrySideBar === `country${country.pk}`
-										? country.cities?.map((city) => {
-												return (
-													<div
-														key={`city${city.pk}`}
-														className="col-start-1"
-													>
-														{active ===
-														`city${city.pk}` ? (
+									<button
+										onClick={() => {
+											setCountrySideBar(
+												`country${country.pk}`
+											);
+											setPageSelect(2);
+											setCountryData(country);
+											setcitySideBar(null);
+											handleActive(
+												`country${country.pk}`
+											);
+										}}
+										className={`text-xl font-semibold text-left pl-6 w-full ${
+											active === `country${country.pk}`
+												? "text-shadow shadow-white text-blue-600"
+												: "hover:text-red-500"
+										} `}
+									>
+										{country.name}
+									</button>
+									<AnimatePresence>
+										{countrySideBar ===
+										`country${country.pk}`
+											? country.cities?.map((city) => {
+													return (
+														<motion.div
+															key={`city${city.pk}`}
+															initial={{
+																scale: 0,
+															}}
+															animate={{
+																scale: 1,
+															}}
+															exit={{ scale: 0 }}
+															transition={{
+																duration: 0.5,
+																ease: "easeOut",
+															}}
+															className="col-start-1"
+														>
 															<button
 																onClick={() => {
 																	setPageSelect(
@@ -128,100 +118,80 @@ function WorldPage() {
 																		`city${city.pk}`
 																	);
 																}}
-																className="text-lg pl-10 text-left font-semibold w-full bg-red-600 text-black rounded-md"
+																className={`text-lg pl-10 text-left font-semibold w-full ${
+																	active ===
+																	`city${city.pk}`
+																		? "text-shadow shadow-white text-blue-600"
+																		: "hover:text-red-500"
+																}`}
 															>
 																{city.name}
 															</button>
-														) : (
-															<button
-																onClick={() => {
-																	setPageSelect(
-																		3
-																	);
-																	setCountryData(
-																		country
-																	);
-																	setCityData(
-																		city
-																	);
-																	handleActive(
-																		`city${city.pk}`
-																	);
-																	setcitySideBar(
-																		`city${city.pk}`
-																	);
-																}}
-																className="text-lg pl-10 text-left font-semibold w-full hover:text-red-500"
-															>
-																{city.name}
-															</button>
-														)}
-														{citySideBar ===
-														`city${city.pk}` ? (
-															<div
-																key={`city${city.pk}`}
-															>
-																{city.districts?.map(
-																	(
-																		district
-																	) => {
-																		return (
-																			<div
-																				key={
-																					district.pk
-																				}
-																				className="col-start-1"
-																			>
-																				{active ===
-																				`district${district.pk}` ? (
-																					<button
-																						onClick={() => {
-																							setPageSelect(
-																								4
-																							);
-																							setDistrictData(
-																								district
-																							);
-																							handleActive(
-																								`district${district.pk}`
-																							);
-																						}}
-																						className="text-base pl-14 text-left font-semibold w-full bg-red-600 text-black rounded-md"
-																					>
-																						{
-																							district.name
+															<AnimatePresence>
+																{citySideBar ===
+																`city${city.pk}` ? (
+																	<motion.div
+																		key={`city${city.pk}`}
+																		initial={{
+																			scale: 0,
+																		}}
+																		animate={{
+																			scale: 1,
+																		}}
+																		exit={{
+																			scale: 0,
+																		}}
+																		transition={{
+																			duration: 0.5,
+																			ease: "easeOut",
+																		}}
+																	>
+																		{city.districts?.map(
+																			(
+																				district
+																			) => {
+																				return (
+																					<div
+																						key={
+																							district.pk
 																						}
-																					</button>
-																				) : (
-																					<button
-																						onClick={() => {
-																							setPageSelect(
-																								4
-																							);
-																							setDistrictData(
-																								district
-																							);
-																							handleActive(
-																								`district${district.pk}`
-																							);
-																						}}
-																						className="text-base pl-14 text-left font-semibold w-full hover:text-red-500"
+																						className="col-start-1"
 																					>
-																						{
-																							district.name
-																						}
-																					</button>
-																				)}
-																			</div>
-																		);
-																	}
-																)}
-															</div>
-														) : null}
-													</div>
-												);
-										  })
-										: null}
+																						<button
+																							onClick={() => {
+																								setPageSelect(
+																									4
+																								);
+																								setDistrictData(
+																									district
+																								);
+																								handleActive(
+																									`district${district.pk}`
+																								);
+																							}}
+																							className={`text-base pl-14 text-left font-semibold w-full ${
+																								active ===
+																								`district${district.pk}`
+																									? "text-shadow shadow-white text-blue-600"
+																									: "hover:text-red-500"
+																							}`}
+																						>
+																							{
+																								district.name
+																							}
+																						</button>
+																					</div>
+																				);
+																			}
+																		)}
+																	</motion.div>
+																) : null}
+															</AnimatePresence>
+														</motion.div>
+													);
+											  })
+											: null}
+									</AnimatePresence>
 								</div>
 							);
 						})}
