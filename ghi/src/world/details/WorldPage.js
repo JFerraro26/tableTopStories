@@ -49,7 +49,7 @@ function WorldPage() {
 							}}
 							className={`w-full text-left text-2xl  font-semibold ${
 								active === "worldPage"
-									? "text-shadow shadow-white text-blue-600"
+									? "text-shadow shadow-white text-fuchsia-600"
 									: "hover:text-red-500"
 							}`}
 						>
@@ -74,7 +74,7 @@ function WorldPage() {
 										}}
 										className={`text-xl font-semibold text-left pl-6 w-full ${
 											active === `country${country.pk}`
-												? "text-shadow shadow-white text-blue-600"
+												? "text-shadow shadow-white text-fuchsia-600"
 												: "hover:text-red-500"
 										} `}
 									>
@@ -88,12 +88,17 @@ function WorldPage() {
 														<motion.div
 															key={`city${city.pk}`}
 															initial={{
+																height: 0,
 																scale: 0,
 															}}
 															animate={{
+																height: "auto",
 																scale: 1,
 															}}
-															exit={{ scale: 0 }}
+															exit={{
+																height: 0,
+																scale: 0,
+															}}
 															transition={{
 																duration: 0.5,
 																ease: "easeOut",
@@ -121,7 +126,7 @@ function WorldPage() {
 																className={`text-lg pl-10 text-left font-semibold w-full ${
 																	active ===
 																	`city${city.pk}`
-																		? "text-shadow shadow-white text-blue-600"
+																		? "text-shadow shadow-white text-fuchsia-600"
 																		: "hover:text-red-500"
 																}`}
 															>
@@ -133,12 +138,15 @@ function WorldPage() {
 																	<motion.div
 																		key={`city${city.pk}`}
 																		initial={{
+																			height: 0,
 																			scale: 0,
 																		}}
 																		animate={{
+																			height: "auto",
 																			scale: 1,
 																		}}
 																		exit={{
+																			height: 0,
 																			scale: 0,
 																		}}
 																		transition={{
@@ -172,7 +180,7 @@ function WorldPage() {
 																							className={`text-base pl-14 text-left font-semibold w-full ${
 																								active ===
 																								`district${district.pk}`
-																									? "text-shadow shadow-white text-blue-600"
+																									? "text-shadow shadow-white text-fuchsia-600"
 																									: "hover:text-red-500"
 																							}`}
 																						>
