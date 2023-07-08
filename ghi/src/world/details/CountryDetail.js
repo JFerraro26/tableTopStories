@@ -1,12 +1,21 @@
-
-function CountryDetail({country}) {
-    return (
-        <div className='flex flex-col items-center'>
-            <h1>{country?.name}</h1>
-            <img src={country?.picture} alt='Map'/>
-            <p>{country?.description}</p>
-        </div>
-    )
+function CountryDetail({ country }) {
+	return (
+		<div className="grid grid-cols-7">
+			<h1 className="mt-6 text-center text-4xl font-bold col-start-1 col-span-7">
+				{country?.name}
+			</h1>
+			<div className="my-6 relative border-2 border-slate-600 overflow-hidden rounded-2xl aspect-video col-start-2 col-span-5">
+				<img
+					className="w-full h-full top-0 left-0 object-cover "
+					src={country?.picture}
+					alt="Map"
+				/>
+			</div>
+			<p className="m-4 whitespace-pre-line col-start-1 col-span-7">
+				{country?.description}
+			</p>
+		</div>
+	);
 }
 
-export default CountryDetail
+export default CountryDetail;
