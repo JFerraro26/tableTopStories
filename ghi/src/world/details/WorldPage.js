@@ -47,7 +47,7 @@ function WorldPage() {
 								setPageSelect(1);
 								handleActive("worldPage");
 							}}
-							className={`w-full text-left text-2xl  font-semibold ${
+							className={`w-full text-left truncate text-2xl  font-semibold ${
 								active === "worldPage"
 									? "text-shadow shadow-white text-fuchsia-600"
 									: "hover:text-red-500"
@@ -72,7 +72,7 @@ function WorldPage() {
 												`country${country.pk}`
 											);
 										}}
-										className={`text-xl font-semibold text-left pl-6 w-full ${
+										className={`text-xl truncate font-semibold text-left pl-6 w-full ${
 											active === `country${country.pk}`
 												? "text-shadow shadow-white text-fuchsia-600"
 												: "hover:text-red-500"
@@ -123,7 +123,7 @@ function WorldPage() {
 																		`city${city.pk}`
 																	);
 																}}
-																className={`text-lg pl-10 text-left font-semibold w-full ${
+																className={`text-lg truncate pl-10 text-left font-semibold w-full ${
 																	active ===
 																	`city${city.pk}`
 																		? "text-shadow shadow-white text-fuchsia-600"
@@ -177,7 +177,7 @@ function WorldPage() {
 																									`district${district.pk}`
 																								);
 																							}}
-																							className={`text-base pl-14 text-left font-semibold w-full ${
+																							className={`text-base truncate pl-14 text-left font-semibold w-full ${
 																								active ===
 																								`district${district.pk}`
 																									? "text-shadow shadow-white text-fuchsia-600"

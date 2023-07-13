@@ -40,7 +40,7 @@ function BaseCreate() {
 									setPageSelect(1);
 									handleActive("worldPage");
 								}}
-								className={`w-full text-left text-2xl  font-semibold ${
+								className={`w-full truncate text-left text-2xl  font-semibold ${
 									active === "worldPage"
 										? "text-shadow shadow-white text-fuchsia-600"
 										: "hover:text-red-500"
@@ -51,7 +51,7 @@ function BaseCreate() {
 						</div>
 					) : (
 						<div className="col-start-1">
-							<h5 className="shadow-lg shadow-red-700 text-2xl font-semibold bg-red-600 text-black rounded-md">
+							<h5 className="text-2xl text-center w-full trunicate font-semibold text-shadow shadow-white text-fuchsia-600">
 								Create a New World
 							</h5>
 						</div>
