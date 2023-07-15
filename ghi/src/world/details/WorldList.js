@@ -1,51 +1,46 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCreatedWorld } from "../../redux/slices/worldCreateSlice";
+import {
+	useGetUserWorldsQuery,
+	useDeleteWorldMutation,
+} from "../../redux/apis/worldsApi";
 
 function WorldList() {
+	const { data: worldsData, error, isLoading } = useGetUserWorldsQuery();
+	const [deleteWorld, isSuccess, isError] = useDeleteWorldMutation();
 	const [worlds, setWorlds] = useState([]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	useEffect(() => {
-		async function fetchWorldsData() {
-			const response = await fetch(
-				`${process.env.REACT_APP_API_HOST}/api/worlds`
-			);
-			if (response.ok) {
-				const data = await response.json();
-				setWorlds(data);
-			} else {
-				console.error(response);
-			}
-		}
-		fetchWorldsData();
-	}, []);
-
-	const deleteButtonClick = async (world) => {
+	const deleteButtonClick = (world) => {
 		const confirm = window.confirm(
 			`Are you sure you want to delete ${world.name}?`
 		);
 		if (confirm) {
-			const worldUrl = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
-			const fetchConfig = { method: "delete" };
-			const response = await fetch(worldUrl, fetchConfig);
-			if (response.ok) {
-				const updatedWorlds = worlds.filter(
-					(item) => item.pk !== world.pk
-				);
-				setWorlds(updatedWorlds);
-			} else {
-				console.error(response);
+			deleteWorld(world.pk);
+			if (isSuccess) {
+				console.log("World deleted");
+			} else if (isError) {
+				console.error("Could Not Delete World");
 			}
 		}
 	};
+	useEffect(() => {
+		if (worldsData) {
+			setWorlds(worldsData);
+		}
+	}, [worldsData]);
 
 	const editButtonClick = (world) => {
 		dispatch(setCreatedWorld(world));
 		navigate("/worlds/form");
 	};
-
+	if (isLoading) {
+		return <h1 className="text-5xl">Loading...</h1>;
+	} else if (error) {
+		return <h1 className="text-5xl">Something Went Wrong</h1>;
+	}
 	return (
 		<>
 			<h1 className="text-center">My Worlds</h1>
