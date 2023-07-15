@@ -8,7 +8,12 @@ import {
 } from "../../redux/apis/worldsApi";
 
 function WorldList() {
-	const { data: worldsData, error, isLoading } = useGetUserWorldsQuery();
+	const {
+		data: worldsData,
+		error,
+		isLoading,
+		refetch,
+	} = useGetUserWorldsQuery();
 	const [deleteWorld, isSuccess, isError] = useDeleteWorldMutation();
 	const [worlds, setWorlds] = useState([]);
 	const dispatch = useDispatch();
@@ -34,15 +39,19 @@ function WorldList() {
 			setWorlds(worldsData);
 		}
 	}, [worldsData]);
-
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 	const editButtonClick = (world) => {
 		dispatch(setCreatedWorld(world));
 		navigate("/worlds/form");
 	};
 	if (isLoading) {
-		return <h1 className="text-5xl">Loading...</h1>;
+		return <h1 className="mt-4 text-center text-5xl">Loading...</h1>;
 	} else if (error) {
-		return <h1 className="text-5xl">Something Went Wrong</h1>;
+		return (
+			<h1 className="mt-4 text-center text-5xl">Something Went Wrong</h1>
+		);
 	}
 	return (
 		<>
