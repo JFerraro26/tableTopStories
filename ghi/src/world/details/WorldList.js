@@ -20,7 +20,10 @@ function WorldList() {
 		if (confirm) {
 			deleteWorld(world.pk);
 			if (isSuccess) {
-				console.log("World deleted");
+				const updatedWorlds = worlds.filter(
+					(item) => item.pk !== world.pk
+				);
+				setWorlds(updatedWorlds);
 			} else if (isError) {
 				console.error("Could Not Delete World");
 			}
