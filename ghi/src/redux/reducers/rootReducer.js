@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import worldCreateSliceReducer from "../slices/worldCreateSlice";
 
 const rootReducer = combineReducers({
-    createdWorld: worldCreateSliceReducer,
-})
+	createdWorld: worldCreateSliceReducer,
+});
 
-export default rootReducer
+export default rootReducer;

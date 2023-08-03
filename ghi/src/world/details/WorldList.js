@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCreatedWorld } from "../../redux/slices/worldCreateSlice";
-import {
-	useGetUserWorldsQuery,
-	useDeleteWorldMutation,
-} from "../../redux/apis/worldsApi";
+import { useGetUserWorldsQuery } from "../../redux/apis/worldsApi";
 
 function WorldList() {
 	const {
@@ -14,23 +11,26 @@ function WorldList() {
 		isLoading,
 		refetch,
 	} = useGetUserWorldsQuery();
-	const [deleteWorld, isSuccess, isError] = useDeleteWorldMutation();
 	const [worlds, setWorlds] = useState([]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const deleteButtonClick = (world) => {
+	const deleteButtonClick = async (world) => {
 		const confirm = window.confirm(
 			`Are you sure you want to delete ${world.name}?`
 		);
 		if (confirm) {
-			deleteWorld(world.pk);
-			if (isSuccess) {
+			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
+			let fetchConfig = {
+				method: "delete",
+			};
+			const response = await fetch(countryUrl, fetchConfig);
+			if (response.ok) {
 				const updatedWorlds = worlds.filter(
 					(item) => item.pk !== world.pk
 				);
 				setWorlds(updatedWorlds);
-			} else if (isError) {
-				console.error("Could Not Delete World");
+			} else {
+				console.error(response);
 			}
 		}
 	};

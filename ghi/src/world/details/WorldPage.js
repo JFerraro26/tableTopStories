@@ -206,7 +206,7 @@ function WorldPage() {
 					</div>
 				</div>
 			</div>
-			<div className="content col-start-2 col-span-4">
+			<div className="content col-start-2 col-span-3">
 				{pageSelect === 1 ? (
 					<WorldDetail world={world} />
 				) : pageSelect === 2 ? (
