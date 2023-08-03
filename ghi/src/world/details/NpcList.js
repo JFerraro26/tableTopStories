@@ -2,7 +2,7 @@ function NpcList({ npcs }) {
 	console.log(npcs);
 	return (
 		<div>
-			<p>NpCs List here</p>
+			<p>{npcs} Npcs List here</p>
 		</div>
 	);
 }

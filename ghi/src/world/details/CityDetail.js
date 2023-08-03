@@ -1,19 +1,60 @@
+import { useState } from "react";
+import Description from "./Description";
+import NpcList from "./NpcList";
+import Events from "./Events";
+import Notes from "./Notes";
+
 function CityDetail({ city }) {
+	const [details, setDetails] = useState("description");
 	return (
-		<div className="grid grid-cols-7">
-			<h1 className="mt-6 text-4xl text-center font-bold col-start-1 col-span-7">
+		<div className="flex flex-col items-center min-h-full my-10">
+			<h1 className="mt-4 text-center text-5xl font-bold">
 				{city?.name}
 			</h1>
-			<div className="my-6 relative border-2 border-slate-600 overflow-hidden rounded-2xl aspect-video col-start-2 col-span-5">
-				<img
-					className="w-full h-full top-0 left-0 object-cover"
-					src={city?.picture}
-					alt="Map"
-				/>
+			<h2 className="text-center pt-1 text-xl font-semibold  text-white">
+				City
+			</h2>
+			<div className="flex py-4 px-6 justify-between w-full max-w-5xl text-2xl font-semibold text-blue-500">
+				<button
+					onClick={() => {
+						setDetails("description");
+					}}
+				>
+					Description
+				</button>
+				<button
+					onClick={() => {
+						setDetails("npcs");
+					}}
+				>
+					NPCs
+				</button>
+				<button
+					onClick={() => {
+						setDetails("events");
+					}}
+				>
+					Events
+				</button>
+				<button
+					onClick={() => {
+						setDetails("notes");
+					}}
+				>
+					Notes
+				</button>
 			</div>
-			<p className="mx-4 whitespace-pre-line col-start-1 col-span-7">
-				{city?.description}
-			</p>
+			<div className="flex-grow text-white text-lg">
+				{details === "description" ? (
+					<Description description={city} />
+				) : details === "npcs" ? (
+					<NpcList npcs={city.name} />
+				) : details === "events" ? (
+					<Events events={city.name} />
+				) : details === "notes" ? (
+					<Notes notes={city.name} />
+				) : null}
+			</div>
 		</div>
 	);
 }
