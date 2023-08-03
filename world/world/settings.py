@@ -46,6 +46,7 @@ DJWTO_ACCESS_TOKEN_LIFETIME = None
 # Application definition
 
 INSTALLED_APPS = [
+    "account_api.apps.AccountApiConfig",
     "rest_framework",
     "world_api.apps.WorldApiConfig",
     "django.contrib.admin",
