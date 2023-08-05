@@ -1,44 +1,44 @@
-volumes:
-  table-top-stories:
-    external: true
+version: "0.0.1"
 services:
-  ghi:
-    image: node:lts-bullseye
-    command: /bin/bash run.sh
-    working_dir: /app
-    volumes:
-        - ./ghi:/app
-    ports:
-        - "3000:3000"
-    environment:
-        HOST_OS: ${OS}
-        NODE_ENV: development
-        HOST: "0.0.0.0"
-        PUBLIC_URL: http://localhost:3000
-        REACT_APP_API_HOST: http://localhost:8060
-  database:
-    build:
-      context: ./relational-data
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - table-top-stories:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_MULTIPLE_DATABASES=world
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=table
-    ports:
-      - 15432:5432
-  world:
-    build:
-      context: ./world
-      dockerfile: ./Dockerfile.dev
-    ports:
-      - "8060:8000"
-    volumes:
-      - ./world:/app
-    depends_on:
-      - database
-    environment:
-      DATABASE_URL: postgres://world:password@database:5432/world
-      WAIT_HOSTS: database:5432
-      WAIT_TIMEOUT: 240
+    ghi:
+        image: node:lts-bullseye
+        command: /bin/bash run.sh
+        working_dir: /app
+        volumes:
+            - ./ghi:/app
+        ports:
+            - "3000:3000"
+        environment:
+            HOST_OS: ${OS}
+            NODE_ENV: development
+            HOST: "0.0.0.0"
+            PUBLIC_URL: http://localhost:3000
+            REACT_APP_API_HOST: http://localhost:8000
+    postgres:
+        image: postgres:15.3-bullseye
+        volumes:
+            - table-top-stories:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=tableTopStories
+            - POSTGRES_USER=tableTopStories
+            - POSTGRES_DB=tableTopStories
+
+        ports:
+            - 15432:5432
+    world:
+        build:
+            context: ./world
+            dockerfile: ./Dockerfile.dev
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./world:/app
+        depends_on:
+            - postgres
+        environment:
+            DATABASE_URL: postgres://tableTopStories:tableTopStories@postgres:5432/tableTopStories
+            WAIT_HOSTS: postgres:5432
+            WAIT_TIMEOUT: 240
+volumes:
+    table-top-stories:
+        external: true

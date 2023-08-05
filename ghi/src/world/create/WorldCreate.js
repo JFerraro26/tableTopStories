@@ -4,18 +4,21 @@ import {
 	setCreatedWorld,
 	clearCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
-import { getNewWorldEdit } from "../../redux/selectors/selectors";
+import {
+	getNewWorldEdit,
+	getAccountData,
+} from "../../redux/selectors/selectors";
 import { motion, AnimatePresence } from "framer-motion";
 
 function WorldCreate() {
 	const [submited, setSubmited] = useState(false);
 	const world = useSelector(getNewWorldEdit);
+	const account = useSelector(getAccountData);
 	const [worldName, setWorldName] = useState("");
 	const [worldPic, setWorldPic] = useState("https://placehold.co/600x400");
 	const [worldDescription, setWorldDescription] = useState("");
 	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 	const [successfulEdit, setSuccessfulEdit] = useState(false);
-
 	useEffect(() => {
 		if (world) {
 			setWorldName(world.name);
@@ -59,6 +62,7 @@ function WorldCreate() {
 				method: "put",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};
@@ -81,6 +85,7 @@ function WorldCreate() {
 				method: "post",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};

@@ -17,28 +17,17 @@ To launch this application on your local machine, please ensure that you meet th
 
 #### Installation
 
-1. Fork Project by clicking Fork on top right of project (Login Required)
-2. Press Clone to grab URL from Forked project page then open up a terminal and run the git clone command.
-
-```
-    git clone "URL HERE"
-```
-
-3. Once the clone finishes, navigate to the correct directory by running this command in your terminal.
-
-```
-    cd table-top-stories
-```
-
-4. Ensure Docker Desktop is Running
-
-5. While the terminal and run the following commands (Ensure Docker is running)
-
-```
-    1. docker-compose build
-    2. docker-compose up
-```
-
-6. There should be 3 containers that are running(The containers should be green)
-7. Wait until the terminal shows `You can now view app in the browser.`
-8. Open up Chrome(Browser) and type in `http://localhost:3000` in the address bar.
+1.  Download and install **Docker Desktop** [here](https://www.docker.com/products/docker-desktop/)
+2.  Open Terminal and choose the directory you will be working on by running this command:
+    > `cd directory_name` <br><small>(change "directory_name" to your respective directory)</small>
+3.  Fork and Clone Project-Beta from Git
+    > `git clone paste_copied_HTTPS_URL_here`
+4.  Change your working directory to the directory you just cloned
+    > `cd tableTopStories`
+5.  Create the volume in Docker
+    > `docker volume create table-top-stories`
+6.  Build the images on Docker > `docker-compose build`
+7.  Run the container from the images you just created
+    > `docker-compose up` <br><small>(at this point you should see all 3 containers running on Docker Desktop)</small>
+8.  Open a browser of choice. Google Chrome is _recommended_.
+9.  Head over to http://localhost:3000/ in your browser to start browsing through the website!

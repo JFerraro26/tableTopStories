@@ -1,6 +1,7 @@
 from .models import World, City, Country, District
-from rest_framework import serializers
-from rest_framework import generics
+from rest_framework import serializers, generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from knox.auth import TokenAuthentication
 
 
 # Create your views here.
@@ -108,11 +109,15 @@ class WorldDetailSerializer(serializers.ModelSerializer):
 class WorldList(generics.ListCreateAPIView):
     queryset = World.objects.all()
     serializer_class = WorldListSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class WorldDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = World.objects.all()
     serializer_class = WorldDetailSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CountryList(generics.ListCreateAPIView):
