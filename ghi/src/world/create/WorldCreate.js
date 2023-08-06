@@ -27,7 +27,7 @@ function WorldCreate() {
 			setSubmited(true);
 		} else {
 			setWorldName("");
-			setWorldPic();
+			setWorldPic("https://placehold.co/600x400");
 			setWorldDescription("");
 			setSubmited(false);
 		}
@@ -52,12 +52,14 @@ function WorldCreate() {
 	const dispatch = useDispatch();
 	const handleWorldSubmit = async (event) => {
 		event.preventDefault();
+		const accountId = account.user.id;
 		const data = {};
 		data.name = worldName;
 		data.picture = worldPic;
 		data.description = worldDescription;
+		data.created_by = accountId;
 		if (submited) {
-			let worldUrlEdit = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
+			let worldUrlEdit = `${process.env.REACT_APP_API_HOST}/api/worlds/update/${world.pk}`;
 			let worldFetchConfigEdit = {
 				method: "put",
 				body: JSON.stringify(data),
@@ -108,6 +110,7 @@ function WorldCreate() {
 		if (confirm) {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/worlds/${world.pk}`;
 			let fetchConfig = {
+				headers: { Authorization: `Token ${account.token}` },
 				method: "delete",
 			};
 			const response = await fetch(countryUrl, fetchConfig);

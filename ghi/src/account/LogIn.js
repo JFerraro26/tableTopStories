@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setAccount, clearAccount } from "../redux/slices/accountSlice";
-import { getAccountData } from "../redux/selectors/selectors";
+import { useDispatch } from "react-redux";
+import { setAccount } from "../redux/slices/accountSlice";
 
 function LoginInForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const account = useSelector(getAccountData);
 	const dispatch = useDispatch();
 
 	const handlesubmit = async (e) => {
@@ -25,26 +23,7 @@ function LoginInForm() {
 		const response = await fetch(url, fetchConfig);
 		if (response.ok) {
 			const token = await response.json();
-			console.log(token.token);
 			dispatch(setAccount(token));
-		} else {
-			console.error(response);
-		}
-	};
-
-	const logOut = async () => {
-		const logOutToken = account.token;
-		let url = `${process.env.REACT_APP_API_HOST}/api/logout`;
-		let fetchConfig = {
-			method: "post",
-			body: null,
-			headers: {
-				Authorization: `Token ${logOutToken}`,
-			},
-		};
-		const response = await fetch(url, fetchConfig);
-		if (response.ok) {
-			dispatch(clearAccount());
 		} else {
 			console.error(response);
 		}
@@ -91,14 +70,6 @@ function LoginInForm() {
 					</button>
 				</div>
 			</form>
-			<button
-				onClick={() => {
-					logOut();
-				}}
-				className="text-xl border-1 rounded-2xl hover:text-red-300"
-			>
-				Log Out
-			</button>
 		</div>
 	);
 }

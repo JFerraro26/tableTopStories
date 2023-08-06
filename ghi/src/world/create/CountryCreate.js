@@ -5,11 +5,15 @@ import {
 	addCountryToCreatedWorld,
 	deleteCountryInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
-import { getNewWorldEdit } from "../../redux/selectors/selectors";
+import {
+	getNewWorldEdit,
+	getAccountData,
+} from "../../redux/selectors/selectors";
 import { motion, AnimatePresence } from "framer-motion";
 
 function CountryCreate({ countryData }) {
 	const world = useSelector(getNewWorldEdit);
+	const account = useSelector(getAccountData);
 	const [countryName, setCountryName] = useState("");
 	const [countryImgURL, setCountryImgURL] = useState("");
 	const [countryDescription, setCountryDescription] = useState("");
@@ -40,6 +44,7 @@ function CountryCreate({ countryData }) {
 		if (confirm) {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/countries/${countryData.pk}`;
 			let fetchConfig = {
+				headers: { Authorization: `Token ${account.token}` },
 				method: "delete",
 			};
 			const response = await fetch(countryUrl, fetchConfig);
@@ -62,12 +67,14 @@ function CountryCreate({ countryData }) {
 		data.picture = countryImgURL;
 		data.description = countryDescription;
 		data.world = world.pk;
+		data.created_by = account.user.id;
 		if (submitted) {
-			let countryUrlUpdate = `${process.env.REACT_APP_API_HOST}/api/countries/${countryData.pk}`;
+			let countryUrlUpdate = `${process.env.REACT_APP_API_HOST}/api/countries/update/${countryData.pk}`;
 			let countryFetchConfigUpdate = {
 				method: "put",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};
@@ -92,6 +99,7 @@ function CountryCreate({ countryData }) {
 				method: "post",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};

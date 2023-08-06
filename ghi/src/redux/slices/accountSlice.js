@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { account: null };
+const initialState = { account: { expiry: null, token: null, user: null } };
 
 export const AccountSlice = createSlice({
 	name: "account",
@@ -10,7 +10,7 @@ export const AccountSlice = createSlice({
 			state.account = action.payload;
 		},
 		clearAccount: (state) => {
-			state.account = null;
+			state.account = { expiry: null, token: null, user: null };
 		},
 	},
 });

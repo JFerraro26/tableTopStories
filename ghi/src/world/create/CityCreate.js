@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	addCityToCreatedWorld,
 	editCityInCreatedWorld,
 	deleteCityInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import { getAccountData } from "../../redux/selectors/selectors";
 
 function CityCreate({ cityData, countryData }) {
 	const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function CityCreate({ cityData, countryData }) {
 	const [cityDescription, setCityDescription] = useState("");
 	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 	const [successfulEdit, setSuccessfulEdit] = useState(false);
+	const account = useSelector(getAccountData);
 
 	useEffect(() => {
 		if (!cityData) {
@@ -37,6 +39,7 @@ function CityCreate({ cityData, countryData }) {
 		if (confirm) {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/cities/${data.pk}`;
 			let fetchConfig = {
+				headers: { Authorization: `Token ${account.token}` },
 				method: "delete",
 			};
 			const response = await fetch(countryUrl, fetchConfig);
@@ -79,12 +82,14 @@ function CityCreate({ cityData, countryData }) {
 		data.picture = cityPicture;
 		data.description = cityDescription;
 		data.country = countryData.pk;
+		data.created_by = account.user.id;
 		if (submitted) {
-			let cityUrlEdit = `${process.env.REACT_APP_API_HOST}/api/cities/${cityData.pk}`;
+			let cityUrlEdit = `${process.env.REACT_APP_API_HOST}/api/cities/update/${cityData.pk}`;
 			let cityFetchConfigEdit = {
 				method: "put",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};
@@ -109,6 +114,7 @@ function CityCreate({ cityData, countryData }) {
 				method: "post",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};

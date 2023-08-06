@@ -3,10 +3,20 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 
 
+class AccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = fields = [
+            "id",
+            "username",
+        ]
+
+
 class CreateAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = [
+            "id",
             "username",
             "email",
             "password",
@@ -44,6 +54,7 @@ class UpdateAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = [
+            "id",
             "username",
             "email",
             "password",
@@ -53,6 +64,13 @@ class UpdateAccountSerializer(serializers.ModelSerializer):
             "is_superuser",
             "date_joined",
         ]
+        extra_kwargs = {
+            "password": {"write_only": True},
+            "last_login": {"read_only": True},
+            "is_staff": {"read_only": True},
+            "is_superuser": {"read_only": True},
+            "date_joined": {"read_only": True},
+        }
 
     def update(self, instance, validated_data):
         password = validated_data.pop("password")

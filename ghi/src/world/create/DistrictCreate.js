@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	addDistrictInCreatedWorld,
 	editDistrictInCreatedWorld,
 	deleteDistrictInCreatedWorld,
 } from "../../redux/slices/worldCreateSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import { getAccountData } from "../../redux/selectors/selectors";
 
 function DistrictCreate({ cityData, countryData, districtData }) {
 	const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 	const [districtDescription, setDistrictDescription] = useState("");
 	const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 	const [successfulEdit, setSuccessfulEdit] = useState(false);
+	const account = useSelector(getAccountData);
 
 	useEffect(() => {
 		if (!districtData) {
@@ -37,12 +39,14 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 		data.picture = districtPicture;
 		data.description = districtDescription;
 		data.city = cityData.pk;
+		data.created_by = account.user.id;
 		if (submitted) {
-			let districtUrlEdit = `${process.env.REACT_APP_API_HOST}/api/districts/${districtData.pk}`;
+			let districtUrlEdit = `${process.env.REACT_APP_API_HOST}/api/districts/update/${districtData.pk}`;
 			let districtFetchConfigEdit = {
 				method: "put",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};
@@ -71,6 +75,7 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 				method: "post",
 				body: JSON.stringify(data),
 				headers: {
+					Authorization: `Token ${account.token}`,
 					"Content-Type": "application/json",
 				},
 			};
@@ -117,6 +122,7 @@ function DistrictCreate({ cityData, countryData, districtData }) {
 		if (confirm) {
 			let countryUrl = `${process.env.REACT_APP_API_HOST}/api/districts/${data.pk}`;
 			let fetchConfig = {
+				headers: { Authorization: `Token ${account.token}` },
 				method: "delete",
 			};
 			const response = await fetch(countryUrl, fetchConfig);

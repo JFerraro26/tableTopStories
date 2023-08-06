@@ -60,6 +60,7 @@ REST_KNOX = {
 }
 
 INSTALLED_APPS = [
+    "corsheaders",
     "account_api.apps.AccountApiConfig",
     "rest_framework",
     "knox",
