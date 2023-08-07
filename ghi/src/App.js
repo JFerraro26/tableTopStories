@@ -4,7 +4,7 @@ import Nav from "./Nav/Nav";
 import WorldList from "./world/details/WorldList";
 import WorldPage from "./world/details/WorldPage";
 import BaseCreate from "./world/create/BaseCreate";
-import LoginInForm from "./account/LogIn";
+import LandingPage from "./account/LandingPage";
 
 function App() {
 	return (
@@ -14,7 +14,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/account">
-						<Route path="login" element={<LoginInForm />} />
+						<Route path="login-signup" element={<LandingPage />} />
 					</Route>
 					<Route path="/worlds">
 						<Route path="" element={<WorldList />} />

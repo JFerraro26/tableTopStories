@@ -55,9 +55,9 @@ function Nav() {
 				) : (
 					<NavLink
 						className="text-2xl font-semibold hover:text-3xl"
-						to="/account/login"
+						to="/account/login-signup"
 					>
-						Log In
+						Login/Signup
 					</NavLink>
 				)}
 			</div>

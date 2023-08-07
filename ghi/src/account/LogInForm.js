@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAccount } from "../redux/slices/accountSlice";
-
-function LoginInForm() {
+import { useNavigate } from "react-router-dom";
+function LoginInForm({ setPage }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handlesubmit = async (e) => {
 		e.preventDefault();
@@ -24,6 +25,7 @@ function LoginInForm() {
 		if (response.ok) {
 			const token = await response.json();
 			dispatch(setAccount(token));
+			navigate("/");
 		} else {
 			console.error(response);
 		}
@@ -61,7 +63,16 @@ function LoginInForm() {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
-				<div className="flex justify-end">
+				<div className="flex justify-between">
+					<button
+						onClick={() => {
+							setPage("sign-up");
+						}}
+						className="text-xl border-1 rounded-2xl hover:text-red-300"
+						type="button"
+					>
+						Signup
+					</button>
 					<button
 						className="text-xl border-1 rounded-2xl hover:text-red-300"
 						type="submit"
