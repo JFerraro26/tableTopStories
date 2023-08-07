@@ -71,7 +71,7 @@ function LoginInForm({ setPage }) {
 						className="text-xl border-1 rounded-2xl hover:text-red-300"
 						type="button"
 					>
-						Signup
+						Need an Account?
 					</button>
 					<button
 						className="text-xl border-1 rounded-2xl hover:text-red-300"
