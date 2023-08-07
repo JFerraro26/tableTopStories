@@ -20,7 +20,7 @@ To launch this application on your local machine, please ensure that you meet th
 1.  Download and install **Docker Desktop** [here](https://www.docker.com/products/docker-desktop/)
 2.  Open Terminal and choose the directory you will be working on by running this command:
     > `cd directory_name` <br><small>(change "directory_name" to your respective directory)</small>
-3.  Fork and Clone Project-Beta from Git
+3.  Fork and Clone tableTopStories from Git
     > `git clone paste_copied_HTTPS_URL_here`
 4.  Change your working directory to the directory you just cloned
     > `cd tableTopStories`
