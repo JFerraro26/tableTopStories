@@ -32,13 +32,14 @@ function LoginInForm({ setPage }) {
 	};
 
 	return (
-		<div className="grid grid-cols-5">
+		<div className="flex flex-col items-center justify-center my-14 sm:grid sm:grid-cols-5">
+			<h1 className="text-3xl font-bold text-white">Table Top Stories</h1>
 			<form
 				onSubmit={handlesubmit}
-				className="flex flex-col mt-10 col-start-2 col-span-3 gap-4"
+				className="flex flex-col items-center justify-center gap-4 sm:col-start-2 sm:col-span-3"
 			>
-				<div className="flex flex-col space-y-1">
-					<label className="text-sm font-semibold text-white">
+				<div className="flex flex-col gap-1 w-full">
+					<label className="text-sm font-semibold text-white pl-1">
 						Email:
 					</label>
 					<input
@@ -46,12 +47,12 @@ function LoginInForm({ setPage }) {
 						name="email"
 						required
 						type="text"
-						className=""
+						className="rounded-lg text-sm px-2 py-1 bg-slate-800 border border-transparent focus:outline-none focus:border-red-600"
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 				</div>
-				<div className="flex flex-col mt-2 space-y-1">
-					<label className="text-sm font-semibold text-white">
+				<div className="flex flex-col mt-2 gap-1 w-full">
+					<label className="text-sm font-semibold text-white pl-1">
 						Password:
 					</label>
 					<input
@@ -59,20 +60,23 @@ function LoginInForm({ setPage }) {
 						name="password"
 						required
 						type="password"
-						className=""
+						className="rounded-lg text-sm px-2 py-1 bg-slate-800 border border-transparent focus:outline-none focus:border-red-600"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
-				<div className="flex justify-between">
-					<button
-						onClick={() => {
-							setPage("sign-up");
-						}}
-						className="text-xl border-1 rounded-2xl hover:text-red-300"
-						type="button"
-					>
-						Need an Account?
-					</button>
+				<div className="flex w-full justify-between">
+					<div className="flex">
+						<button
+							onClick={() => {
+								setPage("sign-up");
+							}}
+							className="text-base border-1 rounded-2xl text-blue-500 hover:text-red-300"
+							type="button"
+						>
+							Need an Account?
+						</button>
+					</div>
+
 					<button
 						className="text-xl border-1 rounded-2xl hover:text-red-300"
 						type="submit"

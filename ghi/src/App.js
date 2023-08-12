@@ -5,12 +5,13 @@ import WorldList from "./world/details/WorldList";
 import WorldPage from "./world/details/WorldPage";
 import BaseCreate from "./world/create/BaseCreate";
 import LandingPage from "./account/LandingPage";
+import CampaignList from "./campaign/CampaignList";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Nav />
-			<div>
+			<div className="flex-grow">
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/account">
@@ -20,6 +21,9 @@ function App() {
 						<Route path="" element={<WorldList />} />
 						<Route path="detail" element={<WorldPage />} />
 						<Route path="form" element={<BaseCreate />} />
+					</Route>
+					<Route path="/campaign">
+						<Route path="" element={<CampaignList />} />
 					</Route>
 				</Routes>
 			</div>

@@ -1,31 +1,14 @@
 import { NavLink } from "react-router-dom";
-import NavMyContent from "./NavMyContent";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAccountData } from "../redux/selectors/selectors";
-import { clearAccount } from "../redux/slices/accountSlice";
+import AccountDropDown from "./AccountDropDown";
+
 import { useState, useEffect } from "react";
 
 function Nav() {
 	const account = useSelector(getAccountData);
 	const [loggedIn, setLoggedIn] = useState(false);
-	const dispatch = useDispatch();
-	const logOut = async () => {
-		const logOutToken = account.token;
-		let url = `${process.env.REACT_APP_API_HOST}/api/logout`;
-		let fetchConfig = {
-			method: "post",
-			body: null,
-			headers: {
-				Authorization: `Token ${logOutToken}`,
-			},
-		};
-		const response = await fetch(url, fetchConfig);
-		if (response.ok) {
-			dispatch(clearAccount());
-		} else {
-			console.error(response);
-		}
-	};
+
 	useEffect(() => {
 		if (account.token) {
 			setLoggedIn(true);
@@ -33,31 +16,38 @@ function Nav() {
 			setLoggedIn(false);
 		}
 	}, [account]);
+
 	return (
-		<nav className="border-b-4 border-red-600">
-			<div className="flex items-center w-full justify-between h-16 px-4 gap-4 ">
+		<nav className="border-b-4 border-red-600 w-full">
+			<div className="flex items-center w-full justify-between px-4 pt-2 pb-1">
 				<NavLink
-					className="text-2xl font-semibold hover:text-3xl"
+					className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
 					to="/"
 				>
 					Home
 				</NavLink>
-				<NavMyContent />
+				<NavLink
+					className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
+					to="/campaign"
+				>
+					Join
+				</NavLink>
+
+				<NavLink
+					className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
+					to="/worlds/form"
+				>
+					Create
+				</NavLink>
+
 				{loggedIn ? (
-					<button
-						onClick={() => {
-							logOut();
-						}}
-						className="text-2xl font-semibold hover:text-3xl"
-					>
-						Log Out
-					</button>
+					<AccountDropDown account={account} />
 				) : (
 					<NavLink
-						className="text-2xl font-semibold hover:text-3xl"
+						className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
 						to="/account/login-signup"
 					>
-						Login/Signup
+						Login
 					</NavLink>
 				)}
 			</div>
