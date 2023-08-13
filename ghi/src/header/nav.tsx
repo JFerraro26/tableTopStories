@@ -1,10 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAccountDispatch, select } from "../redux/hooks";
 import { clearAccount } from "../redux/slices/accountSlice";
 import { useState, useEffect } from "react";
 import { selectAccount } from "../redux/selectors";
 
-function Nav() {
+function header() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const account = select(selectAccount);
 	const dispatch = useAccountDispatch();
@@ -34,34 +34,34 @@ function Nav() {
 		}
 	}, [account]);
 	return (
-		<nav className="border-b-4 border-red-600">
-			<div className="flex items-center w-full justify-between h-16 px-4 gap-4 ">
-				<NavLink
-					className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
+		<header className="border-b-4 border-red-600">
+			<nav className="flex items-center w-full justify-between h-16 px-4 gap-4 ">
+				<Link
+					className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"
 					to="/"
 				>
 					Home
-				</NavLink>
+				</Link>
 				{loggedIn ? (
 					<button
 						onClick={() => {
 							logOut();
 						}}
-						className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
+						className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"
 					>
 						Log Out
 					</button>
 				) : (
-					<NavLink
-						className="text-xl font-semibold sm:hover:text-red-300 sm:text-2xl md:text-3xl"
+					<Link
+						className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"
 						to="/account/login-signup"
 					>
-						Login/Signup
-					</NavLink>
+						Login
+					</Link>
 				)}
-			</div>
-		</nav>
+			</nav>
+		</header>
 	);
 }
 
-export default Nav;
+export default header;

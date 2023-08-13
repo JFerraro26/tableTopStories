@@ -4,14 +4,10 @@ import LoginInForm from "./loginForm";
 function LandingPage() {
 	const [page, setPage] = useState("login");
 	return (
-		<div>
-			{page === "login" ? (
-				<LoginInForm setPage={setPage} />
-			) : (
-				null
-			)}
+		<div className="flex-grow">
+			{page === "login" ? <LoginInForm setPage={setPage} /> : null}
 		</div>
 	);
 }
 
-export default LandingPage
+export default LandingPage;
