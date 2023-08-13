@@ -13,7 +13,7 @@ services:
             NODE_ENV: development
             HOST: "0.0.0.0"
             PUBLIC_URL: http://localhost:3000
-            REACT_APP_API_HOST: http://localhost:8000
+            VITE_BASE_URL: http://localhost:8000
     postgres:
         image: postgres:15.3-bullseye
         volumes:

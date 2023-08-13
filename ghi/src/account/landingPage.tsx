@@ -1,6 +1,5 @@
 import { useState } from "react";
-import LoginInForm from "./LogInForm";
-import SignupForm from "./SignupForm";
+import LoginInForm from "./loginForm";
 
 function LandingPage() {
 	const [page, setPage] = useState("login");
@@ -9,10 +8,10 @@ function LandingPage() {
 			{page === "login" ? (
 				<LoginInForm setPage={setPage} />
 			) : (
-				<SignupForm setPage={setPage} />
+				null
 			)}
 		</div>
 	);
 }
 
-export default LandingPage;
+export default LandingPage

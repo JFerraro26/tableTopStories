@@ -1,4 +1,4 @@
-function MainPage() {
+function Homepage() {
 	return (
 		<div className="grid grid-cols-7">
 			<h1 className="mt-10 col-start-1 col-span-7 text-7xl font-bold text-center">
@@ -16,4 +16,4 @@ function MainPage() {
 	);
 }
 
-export default MainPage;
+export default Homepage;
