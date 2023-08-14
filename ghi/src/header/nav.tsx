@@ -8,7 +8,6 @@ function header() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const account = select(selectAccount);
 	const dispatch = useAccountDispatch();
-	console.log(account);
 	const logOut = async () => {
 		const logOutToken = account.token;
 		let url = `${import.meta.env.VITE_BASE_URL}/api/logout`;

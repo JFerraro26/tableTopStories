@@ -1,12 +1,34 @@
 import { useState } from "react";
 import LoginInForm from "./loginForm";
+import SignUpForm from "./signUpForm.";
+import { motion, AnimatePresence } from "framer-motion";
 
 function LandingPage() {
 	const [page, setPage] = useState("login");
 	return (
-		<div className="flex-grow">
-			{page === "login" ? <LoginInForm setPage={setPage} /> : null}
-		</div>
+		<AnimatePresence>
+			{page === "login" ? (
+				<motion.div
+					key="login"
+					initial={{ opacity: 0, rotateY: -180 }}
+					animate={{ opacity: 1, rotateY: 0 }}
+					transition={{ duration: 0.25 }}
+					className="flex-grow"
+				>
+					<LoginInForm setPage={setPage} />
+				</motion.div>
+			) : (
+				<motion.div
+					key="sign-up"
+					initial={{ opacity: 0, rotateY: -180 }}
+					animate={{ opacity: 1, rotateY: 0 }}
+					transition={{ duration: 0.25 }}
+					className="flex-grow"
+				>
+					<SignUpForm setPage={setPage} />{" "}
+				</motion.div>
+			)}
+		</AnimatePresence>
 	);
 }
 

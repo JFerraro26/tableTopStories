@@ -42,9 +42,9 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 	};
 	return (
 		<div className="grid grid-col-5 h-full">
-			<div className="col-start-1 col-span-5 flex flex-col justify-evenly gap-4 sm:col-start-3 sm:col-span-3">
+			<div className="mx-10 col-start-1 col-span-5 flex flex-col justify-evenly items-center  gap-4 sm:col-start-3 sm:col-span-3">
 				<div className="flex flex-col mx-10 p-6 rounded-xl bg-zinc-700 items-center gap-2 shadow-lg shadow-slate-800 sm:gap-4">
-					<h1 className="mb-2 font-bold text-2xl text-red-600 text-center sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-8xl">
+					<h1 className="mb-2 font-bold text-2xl text-red-600 text-center sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl">
 						Table Top Stories
 					</h1>
 					<form
@@ -119,14 +119,14 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 						</div>
 					</form>
 				</div>
-				<div className="mx-10 rounded-xl max-w-300 aspect-square overflow-hidden shadow-lg shadow-slate-800">
+				<div className="w-full mx-10 mb-2 rounded-xl max-w-300 aspect-video overflow-hidden shadow-lg shadow-slate-800 lg:mx-0 2xl:max-w-4xl">
 					<img
 						className="object-cover w-full h-full"
 						src="https://placehold.co/300x200"
 					/>
 				</div>
 			</div>
-			<div className="hidden sm:flex sm:col-start-1 sm:col-span-2 sm:row-start-1 sm:rounded-xl sm:m-10 sm:shadow-lg sm:shadow-slate-800 sm:overflow-hidden">
+			<div className="hidden flex-grow sm:flex sm:col-start-1 sm:col-span-2 sm:row-start-1 sm:row-span-1 sm:rounded-xl sm:m-10 sm:shadow-lg sm:shadow-slate-800 sm:overflow-hidden">
 				<img
 					className="object-cover w-full h-full"
 					src="https://placehold.co/400x400"
