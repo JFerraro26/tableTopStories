@@ -1,30 +1,12 @@
 import { Link } from "react-router-dom";
-import { useAccountDispatch, select } from "../redux/hooks";
-import { clearAccount } from "../redux/slices/accountSlice";
+import { select } from "../redux/hooks";
 import { useState, useEffect } from "react";
 import { selectAccount } from "../redux/selectors";
+import AccountDropDown from "./accountDropDown";
 
 function header() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const account = select(selectAccount);
-	const dispatch = useAccountDispatch();
-	const logOut = async () => {
-		const logOutToken = account.token;
-		let url = `${import.meta.env.VITE_BASE_URL}/api/logout`;
-		let fetchConfig = {
-			method: "post",
-			body: null,
-			headers: {
-				Authorization: `Token ${logOutToken}`,
-			},
-		};
-		const response = await fetch(url, fetchConfig);
-		if (response.ok) {
-			dispatch(clearAccount());
-		} else {
-			console.error(response);
-		}
-	};
 	useEffect(() => {
 		if (account.token) {
 			setLoggedIn(true);
@@ -42,14 +24,7 @@ function header() {
 					Home
 				</Link>
 				{loggedIn ? (
-					<button
-						onClick={() => {
-							logOut();
-						}}
-						className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"
-					>
-						Log Out
-					</button>
+					<AccountDropDown account={account} />
 				) : (
 					<Link
 						className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"

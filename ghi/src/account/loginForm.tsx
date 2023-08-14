@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useAccountDispatch } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { setAccount } from "../redux/slices/accountSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 	const [password, setPassword] = useState("");
 	const [loginError, setLoginError] = useState(false);
 	const navigate = useNavigate();
-	const dispatch = useAccountDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
@@ -20,7 +20,6 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 			email: email.toLocaleLowerCase(),
 			password: password,
 		};
-		console.log(data);
 		let url = `${import.meta.env.VITE_BASE_URL}/api/login`;
 		let fetchConfig = {
 			method: "post",
@@ -32,7 +31,6 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 		const response = await fetch(url, fetchConfig);
 		if (response.ok) {
 			const token = await response.json();
-			console.log(token);
 			dispatch(setAccount(token));
 			navigate("/");
 		} else {
@@ -54,7 +52,7 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 						<div className="flex flex-col gap-1 text-sm sm:text-xl sm:gap-2 md:text-2xl xl:text-3xl 2xl:text-5xl">
 							<div className="flex gap-2">
 								<label
-									htmlFor="login-email"
+									htmlFor="email"
 									className="font-semibold text-white"
 								>
 									Email:
@@ -75,14 +73,14 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 								required
 								type="text"
 								className="rounded-lg px-2 py-1 bg-slate-600 border border-transparent focus:outline-none focus:border-white"
-								autoComplete="login-email"
-								name="login-email"
-								id="login-email"
+								autoComplete="email"
+								name="email"
+								id="email"
 							/>
 						</div>
 						<div className="flex flex-col mt-2 gap-1 text-sm sm:text-xl sm:gap-2 md:text-2xl xl:text-3xl 2xl:text-5xl">
 							<label
-								htmlFor="login-password"
+								htmlFor="password"
 								className="font-semibold text-white"
 							>
 								Password:
@@ -93,9 +91,9 @@ function LoginInForm({ setPage }: LoginInFormProps) {
 								required
 								type="password"
 								className="rounded-lg px-2 py-1 bg-slate-600 border border-transparent focus:outline-none focus:border-white"
-								autoComplete="login-password"
-								name="login-password"
-								id="login-password"
+								autoComplete="password"
+								name="password"
+								id="password"
 							/>
 						</div>
 						<div className="flex justify-between pt-4 sm:px-2 sm:justify-around">

@@ -7,13 +7,14 @@ import About from "./footer/about";
 import CodeOfConduct from "./footer/codeOfConduct.";
 import FAQ from "./footer/faq";
 import Terms from "./footer/terms";
+import BaseWorldCreate from "./world/create/baseCreate";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<div className="min-h-screen min-w-full bg-zinc-500 text-white flex flex-col font-serif">
 				<Nav />
-				<main className="flex-grow flex">
+				<main className="flex-grow flex bg-table-dice bg-cover">
 					<Routes>
 						<Route path="/" element={<Homepage />} />
 						<Route path="/about" element={<About />} />
@@ -28,6 +29,9 @@ function App() {
 								path="login-signup"
 								element={<LandingPage />}
 							/>
+						</Route>
+						<Route path="/world">
+							<Route path="form" element={<BaseWorldCreate />} />
 						</Route>
 					</Routes>
 				</main>

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAccount } from "../redux/slices/accountSlice";
-import { useAccountDispatch } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 
 interface LoginInFormProps {
 	setPage: React.Dispatch<React.SetStateAction<string>>;
@@ -19,7 +19,7 @@ function SignUpForm({ setPage }: LoginInFormProps) {
 	const [emailError, setEmailError] = useState(false);
 	const [emailErrorUse, setEmailErrorUse] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
-	const dispatch = useAccountDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const handlesubmit = async (e: FormEvent) => {
