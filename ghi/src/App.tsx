@@ -8,11 +8,12 @@ import CodeOfConduct from "./footer/codeOfConduct.";
 import FAQ from "./footer/faq";
 import Terms from "./footer/terms";
 import BaseWorldCreate from "./world/create/baseCreate";
+import CampaignList from "./campaign/campainList";
 
 function App() {
 	return (
 		<BrowserRouter>
-			<div className="min-h-screen min-w-full bg-zinc-500 text-white flex flex-col font-serif">
+			<div className="min-h-screen min-w-full bg-zinc-700 text-white flex flex-col font-serif">
 				<Nav />
 				<main className="flex-grow flex bg-table-dice bg-cover">
 					<Routes>
@@ -32,6 +33,9 @@ function App() {
 						</Route>
 						<Route path="/world">
 							<Route path="form" element={<BaseWorldCreate />} />
+						</Route>
+						<Route path="/campaign">
+							<Route path="list" element={<CampaignList />} />
 						</Route>
 					</Routes>
 				</main>
