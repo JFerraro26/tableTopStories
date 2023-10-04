@@ -3,6 +3,7 @@ import { select } from "../redux/hooks";
 import { useState, useEffect } from "react";
 import { selectAccount } from "../redux/selectors";
 import AccountDropDown from "./accountDropDown";
+import LoginPopUp from "./loginPopUp";
 
 function header() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -26,12 +27,7 @@ function header() {
 				{loggedIn ? (
 					<AccountDropDown account={account} />
 				) : (
-					<Link
-						className="text-xl font-semibold sm:hover:text-red-600 sm:text-2xl md:text-3xl"
-						to="/account/login-signup"
-					>
-						Login
-					</Link>
+					<LoginPopUp />
 				)}
 			</nav>
 		</header>

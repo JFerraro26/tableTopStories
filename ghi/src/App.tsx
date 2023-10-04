@@ -2,13 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./homepage";
 import Nav from "./header/nav";
 import Footer from "./footer/footer";
-import LandingPage from "./account/landingPage";
 import About from "./footer/about";
 import CodeOfConduct from "./footer/codeOfConduct.";
 import FAQ from "./footer/faq";
 import Terms from "./footer/terms";
 import BaseWorldCreate from "./world/create/baseCreate";
 import CampaignList from "./campaign/campainList";
+import ForgotPassword from "./account/forgotPassword";
 
 function App() {
 	return (
@@ -27,8 +27,8 @@ function App() {
 						<Route path="/terms-of-service" element={<Terms />} />
 						<Route path="/account">
 							<Route
-								path="login-signup"
-								element={<LandingPage />}
+								path="forgot-password"
+								element={<ForgotPassword />}
 							/>
 						</Route>
 						<Route path="/world">
